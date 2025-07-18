@@ -1,0 +1,80 @@
+# Built application files
+*.apk
+*.ap_
+*.aab
+*.aar
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+build/
+.gradle/
+local.properties
+.idea/workspace.xml
+.idea/libraries/
+.idea/modules.xml
+.idea/compiler.xml
+.idea/caches/
+captures/
+.externalNativeBuild/
+.cxx/
+*.iml
+*.iws
+*.ipr
+.project
+.settings/
+gradle.properties
+# Gradle files
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+!gradlew
+!gradlew.bat
+
+# Android Studio 3.x and higher
+.idea/codeStyles/
+.idea/libraries/
+.idea/runConfigurations/
+.idea/assetWizardSettings.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/modules.xml
+.idea/.name
+.idea/render.experimental
+.idea/tasks.xml
+.idea/dictionaries/
+
+# External native build files
+.externalNativeBuild/
+
+# Local Android SDK
+sdk/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services file
+# This file contains sensitive API keys and should NOT be committed to public repositories.
+# It should be provided separately to collaborators.
+google-services.json
+
+# Crashlytics/Firebase Crash Reporting
+crashlytics-build.properties
+
+# Android Profiler results
+*.trace
+
+# Kotlin specific
+*.kt.iml
+.idea/kotlinc.xml
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db

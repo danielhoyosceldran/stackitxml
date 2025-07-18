@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.home.HomeActivity"
+    android:id="@+id/home_root_layout"> <!-- ID per a la disposició arrel -->
+
+    <!-- Títol de la pantalla -->
+    <TextView
+        android:id="@+id/homeTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Les Meves Col·leccions"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- RecyclerView per mostrar les col·leccions -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/collectionsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_collection" /> <!-- Preview amb un element de col·lecció -->
+
+    <!-- Floating Action Button per afegir noves col·leccions -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addCollectionFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="Afegir nova col·lecció"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+</LinearLayout>

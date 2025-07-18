@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permís per accedir a Internet, necessari per a Firebase -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Stackitxml"
+        tools:targetApi="31">
+
+        <!-- MainActivity com a punt d'entrada principal (redirecció) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Activitat de Login -->
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="false" />
+
+        <!-- Activitat de Registre -->
+        <activity
+            android:name=".ui.auth.RegisterActivity"
+            android:exported="false" />
+
+        <!-- Activitat Home (llista de col·leccions) -->
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false" />
+
+        <!-- Activitat de Detall de Col·lecció (llista d'ítems) -->
+        <activity
+            android:name=".ui.collectiondetail.CollectionDetailActivity"
+            android:exported="false" />
+
+        <!-- Activitat d'Estadístiques -->
+        <activity
+            android:name=".ui.statistics.StatisticsActivity"
+            android:exported="false" />
+
+    </application>
+</manifest>
