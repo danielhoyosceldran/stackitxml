@@ -13,9 +13,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // No cal cridar setContentView(R.layout.activity_main) si només és un redirector.
-        // Si vols una pantalla de splash temporal, pots mantenir-la, però per un projecte ràpid, la podem ometre.
-        // setContentView(R.layout.activity_main) // Aquesta línia pot ser eliminada o comentada si no hi ha UI a MainActivity
 
         auth = FirebaseAuth.getInstance()
 

@@ -12,14 +12,17 @@ import com.example.stackitxml.data.repository.FirestoreRepository
 import com.example.stackitxml.ui.home.HomeActivity // Encara no existeix, la crearem aviat
 import kotlinx.coroutines.launch
 
-class RegisterActivity : AppCompatActivity() {
+class    RegisterActivity : AppCompatActivity() {
 
+    // Objecte per a recuperar dades de Firestore
+    // Conté totes les funcions necessàries
     private val firestoreRepository = FirestoreRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        // Carreguem els elements de la UI
         val emailEditText: EditText = findViewById(R.id.emailEditText)
         val passwordEditText: EditText = findViewById(R.id.passwordEditText)
         val usernameEditText: EditText = findViewById(R.id.usernameEditText)
@@ -35,9 +38,11 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // De forma asíncrona (corutina) registrem l'usuari
             lifecycleScope.launch {
                 val result = firestoreRepository.registerUser(email, password, username)
                 result.onSuccess { user ->
+                    // Utilitzem this@RegisterActivity per indicar el context corrent (no podem fer this perquè estem a un altre fil d'execució)
                     Toast.makeText(this@RegisterActivity, "Registre exitós per a ${user.username}!", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
                     finish()

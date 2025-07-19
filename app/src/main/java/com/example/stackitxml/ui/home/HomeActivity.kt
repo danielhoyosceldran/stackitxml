@@ -7,11 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge // Importa per a enableEdgeToEdge
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat // Importa per a ViewCompat
-import androidx.core.view.WindowInsetsCompat // Importa per a WindowInsetsCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,31 +37,29 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge() // Habilita el mode edge-to-edge
-        setContentView(R.layout.activity_home)
+        enableEdgeToEdge() // Pel tema de la barra de notificacions
+        setContentView(R.layout.activity_home) // Enllaça la view XML a aquest fitxer
 
-        // Aplica els insets a la vista arrel per evitar superposició amb barres del sistema
+        // Aplica els insets a la vista arrel per evitar superposició amb barres i elements del mobil
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home_root_layout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            // Aplica padding a la part superior i inferior (o on calgui)
-            // L'ús de `fitsSystemWindows="true"` a l'XML ja gestiona la majoria.
-            // Aquest bloc és més per a un control fi o si `fitsSystemWindows` no és suficient.
-            // Per simplicitat, si `fitsSystemWindows` funciona bé, es pot deixar sense padding addicional aquí,
-            // o només aplicar-lo a elements específics si es desitja un efecte particular.
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
 
-        // Inicialitza les vistes
+        // Carreguem els elements de la UI
         collectionsRecyclerView = findViewById(R.id.collectionsRecyclerView)
         addCollectionFab = findViewById(R.id.addCollectionFab)
         homeTitleTextView = findViewById(R.id.homeTitleTextView)
         logoutButton = findViewById(R.id.logoutButton)
 
-        // Configura el RecyclerView
+        // Configura el RecyclerView (la llista de col·leccions)
         collectionsRecyclerView.layoutManager = LinearLayoutManager(this)
+        // Inicialitzem el collectionAdapter buit, fins que omplim amb dades de la BBDD
+        // collection adapter és, com diu el nom un adabtador. Ho tinc apuntat a la docu
         collectionAdapter = CollectionAdapter(emptyList()) { collection ->
+            // Intents explicats a la docu
             val intent = Intent(this, CollectionDetailActivity::class.java).apply {
                 putExtra(Constants.EXTRA_COLLECTION_ID, collection.collectionId)
             }
@@ -88,9 +86,6 @@ class HomeActivity : AppCompatActivity() {
         loadCollections()
     }
 
-    /**
-     * Mostra un diàleg per afegir una nova col·lecció.
-     */
     private fun showAddCollectionDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_collection, null)
         val nameEditText: EditText = dialogView.findViewById(R.id.collectionNameEditText)
@@ -137,9 +132,6 @@ class HomeActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    /**
-     * Carrega les col·leccions a les quals l'usuari actual té accés.
-     */
     private fun loadCollections() {
         val currentUserId = firestoreRepository.getCurrentUserId()
         if (currentUserId == null) {

@@ -20,7 +20,7 @@ class CollectionAdapter(
 
     /**
      * ViewHolder per a cada element de la col·lecció a la llista.
-     * Conté les referències a les vistes del layout item_collection.xml.
+     * Conté le less referències a vistes del layout item_collection.xml.
      */
     class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val collectionNameTextView: TextView = itemView.findViewById(R.id.collectionNameTextView)

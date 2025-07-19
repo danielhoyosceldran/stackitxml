@@ -14,13 +14,15 @@ import com.example.stackitxml.ui.home.HomeActivity // Encara no existeix, la cre
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
-
+    // Objecte per a recuperar dades de Firestore
+    // Conté totes les funcions necessàries
     private val firestoreRepository = FirestoreRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // Carreguem els elements de la UI
         val emailEditText: EditText = findViewById(R.id.emailEditText)
         val passwordEditText: EditText = findViewById(R.id.passwordEditText)
         val loginButton: Button = findViewById(R.id.loginButton)
@@ -35,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // De forma asíncrona (corutina) registrem l'usuari
             lifecycleScope.launch {
                 val result = firestoreRepository.loginUser(email, password)
                 result.onSuccess { user ->
@@ -47,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // Carregar la vista de registre
         registerTextView.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
