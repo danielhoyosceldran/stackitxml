@@ -5,18 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog // Importa per a AlertDialog
+import androidx.activity.enableEdgeToEdge // Importa per a enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat // Importa per a ViewCompat
+import androidx.core.view.WindowInsetsCompat // Importa per a WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stackitxml.R
 import com.example.stackitxml.data.model.Collection
 import com.example.stackitxml.data.repository.FirestoreRepository
-import com.example.stackitxml.ui.collectiondetail.CollectionDetailActivity // La crearem aviat
+import com.example.stackitxml.ui.auth.LoginActivity
+import com.example.stackitxml.ui.collectiondetail.CollectionDetailActivity
 import com.example.stackitxml.util.Constants
-import com.example.stackitxml.util.DialogUtils // Importa la utilitat de diàlegs
+import com.example.stackitxml.util.DialogUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -25,23 +30,38 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var collectionsRecyclerView: RecyclerView
     private lateinit var addCollectionFab: FloatingActionButton
     private lateinit var homeTitleTextView: TextView
+    private lateinit var logoutButton: ImageButton
 
     private lateinit var collectionAdapter: CollectionAdapter
     private val firestoreRepository = FirestoreRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge() // Habilita el mode edge-to-edge
         setContentView(R.layout.activity_home)
+
+        // Aplica els insets a la vista arrel per evitar superposició amb barres del sistema
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home_root_layout)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            // Aplica padding a la part superior i inferior (o on calgui)
+            // L'ús de `fitsSystemWindows="true"` a l'XML ja gestiona la majoria.
+            // Aquest bloc és més per a un control fi o si `fitsSystemWindows` no és suficient.
+            // Per simplicitat, si `fitsSystemWindows` funciona bé, es pot deixar sense padding addicional aquí,
+            // o només aplicar-lo a elements específics si es desitja un efecte particular.
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
 
         // Inicialitza les vistes
         collectionsRecyclerView = findViewById(R.id.collectionsRecyclerView)
         addCollectionFab = findViewById(R.id.addCollectionFab)
         homeTitleTextView = findViewById(R.id.homeTitleTextView)
+        logoutButton = findViewById(R.id.logoutButton)
 
         // Configura el RecyclerView
         collectionsRecyclerView.layoutManager = LinearLayoutManager(this)
         collectionAdapter = CollectionAdapter(emptyList()) { collection ->
-            // Gestionar el clic en una col·lecció (anar a CollectionDetailActivity)
             val intent = Intent(this, CollectionDetailActivity::class.java).apply {
                 putExtra(Constants.EXTRA_COLLECTION_ID, collection.collectionId)
             }
@@ -52,6 +72,16 @@ class HomeActivity : AppCompatActivity() {
         // Configura el botó flotant per afegir col·leccions
         addCollectionFab.setOnClickListener {
             showAddCollectionDialog()
+        }
+
+        // Configura el listener per al botó de Log Out
+        logoutButton.setOnClickListener {
+            firestoreRepository.signOut()
+            DialogUtils.showToast(this, "Sessió tancada correctament.")
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
 
         // Carrega les col·leccions en iniciar l'activitat
@@ -73,7 +103,7 @@ class HomeActivity : AppCompatActivity() {
             .create()
 
         cancelButton.setOnClickListener {
-            dialog.dismiss() // Tanca el diàleg
+            dialog.dismiss()
         }
 
         createButton.setOnClickListener {
@@ -89,26 +119,22 @@ class HomeActivity : AppCompatActivity() {
             if (currentUserId == null) {
                 DialogUtils.showLongToast(this, "Error: Usuari no autenticat. Torna a iniciar sessió.")
                 dialog.dismiss()
-                // Opcional: redirigir a LoginActivity
-                // startActivity(Intent(this, LoginActivity::class.java))
-                // finish()
                 return@setOnClickListener
             }
 
-            // Crida al repositori per crear la col·lecció
             lifecycleScope.launch {
                 val result = firestoreRepository.createCollection(name, description, currentUserId)
                 result.onSuccess {
                     DialogUtils.showToast(this@HomeActivity, "Col·lecció '${it.name}' creada amb èxit!")
                     dialog.dismiss()
-                    loadCollections() // Recarrega la llista de col·leccions
+                    loadCollections()
                 }.onFailure { exception ->
                     DialogUtils.showLongToast(this@HomeActivity, "Error al crear col·lecció: ${exception.message}")
                 }
             }
         }
 
-        dialog.show() // Mostra el diàleg
+        dialog.show()
     }
 
     /**
@@ -118,9 +144,6 @@ class HomeActivity : AppCompatActivity() {
         val currentUserId = firestoreRepository.getCurrentUserId()
         if (currentUserId == null) {
             DialogUtils.showLongToast(this, "Error: Usuari no autenticat. Torna a iniciar sessió.")
-            // Opcional: redirigir a LoginActivity si no hi ha usuari
-            // startActivity(Intent(this, LoginActivity::class.java))
-            // finish()
             return
         }
 
@@ -137,7 +160,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // Recarrega les col·leccions cada vegada que l'activitat es torna visible
     override fun onResume() {
         super.onResume()
         loadCollections()
