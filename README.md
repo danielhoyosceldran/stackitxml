@@ -124,6 +124,7 @@ google-services.json
 
 - **`collections` Collection**
   - **Document ID:** Auto-generated
+  - 
   - **Fields:**
     - `name`: String
     - `description`: String
@@ -145,4 +146,4 @@ google-services.json
 ## 📖 Notes
 
 - This project is intended for educational purposes.
-- Firestore **Test Mode** allows open read/write for 30 days — restrict rules for production.
+- Firestore **Test Mode**.
