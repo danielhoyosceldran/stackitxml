@@ -94,10 +94,8 @@ class FirestoreRepository {
 
     // --- MÈTODES PER A COL·LECCIONS ---
 
-    /**
-     * Crea una nova col·lecció a Firestore i l'assigna a l'usuari actual.
-     * També actualitza la llista de col·leccions accessibles de l'usuari.
-     */
+    // Crea una nova col·lecció a Firestore i l'assigna a l'usuari actual.
+    // També actualitza la llista de col·leccions accessibles de l'usuari.
     suspend fun createCollection(name: String, description: String, ownerId: String): Result<Collection> {
         return try {
             val newCollection = Collection(
@@ -123,9 +121,7 @@ class FirestoreRepository {
         }
     }
 
-    /**
-     * Obté una col·lecció per la seva ID.
-     */
+    // Obté una col·lecció per la seva ID.
     suspend fun getCollectionById(collectionId: String): Result<Collection> {
         return try {
             val docSnapshot = db.collection(Constants.COLLECTION_COLLECTIONS).document(collectionId).get().await()
@@ -140,9 +136,7 @@ class FirestoreRepository {
         }
     }
 
-    /**
-     * Obté totes les col·leccions a les quals l'usuari té accés (és membre).
-     */
+    // Obté totes les col·leccions a les quals l'usuari té accés (és membre).
     suspend fun getCollectionsForUser(userId: String): Result<List<Collection>> {
         return try {
             val userDoc = db.collection(Constants.COLLECTION_USERS).document(userId).get().await()
@@ -170,10 +164,8 @@ class FirestoreRepository {
         }
     }
 
-    /**
-     * Comparteix una col·lecció amb un altre usuari.
-     * Afegeix l'usuari a la llista de membres de la col·lecció i la col·lecció a la llista d'accessibles de l'usuari.
-     */
+    // Comparteix una col·lecció amb un altre usuari.
+    // Afegeix l'usuari a la llista de membres de la col·lecció i la col·lecció a la llista d'accessibles de l'usuari.
     suspend fun shareCollection(collectionId: String, receptorEmail: String): Result<Unit> {
         return try {
             // 1. Trobar l'usuari receptor per correu electrònic
@@ -206,9 +198,7 @@ class FirestoreRepository {
 
     // --- MÈTODES PER A ÍTEMS ---
 
-    /**
-     * Afegeix un nou ítem a una col·lecció.
-     */
+    // Afegeix un nou ítem a una col·lecció.
     suspend fun addItemToCollection(collectionId: String, item: Item): Result<Item> {
         return try {
             val docRef = db.collection(Constants.COLLECTION_COLLECTIONS)
@@ -224,9 +214,7 @@ class FirestoreRepository {
         }
     }
 
-    /**
-     * Obté tots els ítems d'una col·lecció específica.
-     */
+    // Obté tots els ítems d'una col·lecció específica.
     suspend fun getItemsInCollection(collectionId: String): Result<List<Item>> {
         return try {
             val querySnapshot = db.collection(Constants.COLLECTION_COLLECTIONS)
@@ -241,13 +229,7 @@ class FirestoreRepository {
         }
     }
 
-    /**
-     * Actualitza el comptador personal d'un ítem i el totalCount.
-     * @param collectionId L'ID de la col·lecció a la qual pertany l'ítem.
-     * @param itemId L'ID de l'ítem a actualitzar.
-     * @param userId L'ID de l'usuari el comptador del qual s'actualitza.
-     * @param newCount El nou valor del comptador personal.
-     */
+    // Actualitza el comptador personal d'un ítem i el totalCount.
     suspend fun updateItemCount(collectionId: String, itemId: String, userId: String, newCount: Long): Result<Unit> {
         return try {
             val itemRef = db.collection(Constants.COLLECTION_COLLECTIONS)
