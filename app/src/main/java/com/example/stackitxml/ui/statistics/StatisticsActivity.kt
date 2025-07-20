@@ -44,9 +44,7 @@ class StatisticsActivity : AppCompatActivity() {
         loadStatistics()
     }
 
-    /**
-     * Carrega les dades de la col·lecció i calcula les estadístiques.
-     */
+    // Carrega les dades de la col·lecció i calcula les estadístiques.
     private fun loadStatistics() {
         collectionId?.let { id ->
             lifecycleScope.launch {

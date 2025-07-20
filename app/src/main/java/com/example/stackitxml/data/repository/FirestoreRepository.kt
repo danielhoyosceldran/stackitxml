@@ -174,27 +174,27 @@ class FirestoreRepository {
      * Comparteix una col·lecció amb un altre usuari.
      * Afegeix l'usuari a la llista de membres de la col·lecció i la col·lecció a la llista d'accessibles de l'usuari.
      */
-    suspend fun shareCollection(collectionId: String, recipientEmail: String): Result<Unit> {
+    suspend fun shareCollection(collectionId: String, receptorEmail: String): Result<Unit> {
         return try {
             // 1. Trobar l'usuari receptor per correu electrònic
-            val recipientQuery = db.collection(Constants.COLLECTION_USERS)
-                .whereEqualTo("email", recipientEmail)
+            val receptorQuery = db.collection(Constants.COLLECTION_USERS)
+                .whereEqualTo("email", receptorEmail)
                 .limit(1)
                 .get()
                 .await()
 
-            val recipientUser = recipientQuery.documents.firstOrNull()?.toObject(User::class.java)
+            val receptorUser = receptorQuery.documents.firstOrNull()?.toObject(User::class.java)
                 ?: return Result.failure(Exception("Usuari amb aquest correu electrònic no trobat."))
 
-            val recipientUserId = recipientUser.userId
+            val receptorUserId = receptorUser.userId
 
-            // 2. Afegir el recipient a la llista de membres de la col·lecció
+            // 2. Afegir el receptor a la llista de membres de la col·lecció
             db.collection(Constants.COLLECTION_COLLECTIONS).document(collectionId)
-                .update("memberIds", FieldValue.arrayUnion(recipientUserId))
+                .update("memberIds", FieldValue.arrayUnion(receptorUserId))
                 .await()
 
-            // 3. Afegir la col·lecció a la llista de col·leccions accessibles del recipient
-            db.collection(Constants.COLLECTION_USERS).document(recipientUserId)
+            // 3. Afegir la col·lecció a la llista de col·leccions accessibles del receptor
+            db.collection(Constants.COLLECTION_USERS).document(receptorUserId)
                 .update("accessibleCollectionIds", FieldValue.arrayUnion(collectionId))
                 .await()
 

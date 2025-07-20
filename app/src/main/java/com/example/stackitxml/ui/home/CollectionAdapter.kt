@@ -6,22 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stackitxml.R
-import com.example.stackitxml.data.model.Collection // Importa el model de dades Collection
-
-/**
- * Adaptador per al RecyclerView que mostra la llista de col·leccions.
- * @param collections La llista inicial de col·leccions a mostrar.
- * @param onItemClick Listener per gestionar els clics en un element de la col·lecció.
- */
+import com.example.stackitxml.data.model.Collection
+// Adaptador per al RecyclerView que mostra la llista de col·leccions.
 class CollectionAdapter(
     private var collections: List<Collection>,
     private val onItemClick: (Collection) -> Unit
 ) : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
-    /**
-     * ViewHolder per a cada element de la col·lecció a la llista.
-     * Conté le less referències a vistes del layout item_collection.xml.
-     */
+    // ViewHolder per a cada element de la col·lecció a la llista.
+    // Conté le les referències a vistes del layout item_collection.xml.
     class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val collectionNameTextView: TextView = itemView.findViewById(R.id.collectionNameTextView)
         val collectionDescriptionTextView: TextView = itemView.findViewById(R.id.collectionDescriptionTextView)
@@ -29,19 +22,19 @@ class CollectionAdapter(
         val collectionMembersCountTextView: TextView = itemView.findViewById(R.id.collectionMembersCountTextView)
     }
 
-    /**
-     * Crea i retorna un nou ViewHolder.
-     * S'invoca quan el RecyclerView necessita un nou ViewHolder per representar un element.
-     */
+
+     // Crea i retorna un nou ViewHolder.
+     // S'invoca quan el RecyclerView necessita un nou ViewHolder per representar un element.
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_collection, parent, false)
         return CollectionViewHolder(view)
     }
 
-    /**
-     * Vincula les dades d'una col·lecció a un ViewHolder.
-     * S'invoca per actualitzar el contingut d'un ViewHolder existent amb noves dades.
-     */
+
+     // Vincula les dades d'una col·lecció a un ViewHolder.
+     // S'invoca per actualitzar el contingut d'un ViewHolder existent amb noves dades.
+
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) {
         val collection = collections[position]
         holder.collectionNameTextView.text = collection.name
@@ -56,17 +49,10 @@ class CollectionAdapter(
         }
     }
 
-    /**
-     * Retorna el nombre total d'elements a la llista de col·leccions.
-     */
     override fun getItemCount(): Int {
         return collections.size
     }
 
-    /**
-     * Actualitza la llista de col·leccions i notifica al RecyclerView els canvis.
-     * @param newCollections La nova llista de col·leccions.
-     */
     fun updateCollections(newCollections: List<Collection>) {
         this.collections = newCollections
         notifyDataSetChanged() // Notifica a l'adaptador que les dades han canviat
