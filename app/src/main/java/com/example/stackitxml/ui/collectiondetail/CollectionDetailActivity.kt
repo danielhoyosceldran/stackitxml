@@ -98,6 +98,7 @@ class CollectionDetailActivity : AppCompatActivity() {
                 val result = firestoreRepository.getCollectionById(id)
                 result.onSuccess { collection ->
                     collectionDetailNameTextView.text = collection.name
+                    collectionDescriptionTextView.text = collection.description
                 }.onFailure { exception ->
                     DialogUtils.showLongToast(this@CollectionDetailActivity, "Error en carregar detalls de la col·lecció: ${exception.message}")
                     finish() // Tanca si no es poden carregar els detalls

@@ -44,7 +44,6 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-
     <!-- RecyclerView per mostrar les col·leccions -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/collectionsRecyclerView"
