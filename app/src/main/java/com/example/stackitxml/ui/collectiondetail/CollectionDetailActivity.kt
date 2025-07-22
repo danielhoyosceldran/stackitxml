@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -31,11 +32,12 @@ class CollectionDetailActivity : AppCompatActivity() {
     private lateinit var itemAdapter: ItemAdapter
     private val firestoreRepository = FirestoreRepository()
 
-    private var collectionId: String? = null // Per emmagatzemar l'ID de la col·lecció actual
+    private var collectionId: String? = null // ID de la col·lecció actual
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection_detail)
+        enableEdgeToEdge()
 
         // Obtenir l'ID de la col·lecció de l'Intent
         collectionId = intent.getStringExtra(Constants.EXTRA_COLLECTION_ID)
