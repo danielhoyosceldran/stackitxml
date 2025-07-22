@@ -64,6 +64,15 @@
                 android:backgroundTint="?attr/colorPrimary"
                 app:cornerRadius="20dp" />
 
+            <ImageButton
+                android:id="@+id/deleteButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/errorBackgroundColor"
+                android:src="@android:drawable/ic_menu_delete"
+                app:tint="@android:color/white" />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StackIt</string>
+    <string name="description_placeholder">Collection description...</string>
 </resources>

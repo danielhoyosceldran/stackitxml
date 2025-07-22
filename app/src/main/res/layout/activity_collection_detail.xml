@@ -46,8 +46,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collectionDetailNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/collectionDescriptionTextView"
         tools:listitem="@layout/item_collection_item" />
+
+    <!-- Descripció de la colecció -->
+    <TextView
+        android:id="@+id/collectionDescriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@id/itemsRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/collectionDetailNameTextView"/>
+
 
     <!-- Floating Action Button per afegir nous ítems -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -72,5 +87,4 @@
         app:layout_constraintBottom_toTopOf="@+id/addItemFab"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

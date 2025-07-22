@@ -28,6 +28,7 @@ class CollectionDetailActivity : AppCompatActivity() {
     private lateinit var itemsRecyclerView: RecyclerView
     private lateinit var addItemFab: FloatingActionButton
     private lateinit var viewStatsFab: FloatingActionButton
+    private lateinit var collectionDescriptionTextView: TextView
 
     private lateinit var itemAdapter: ItemAdapter
     private val firestoreRepository = FirestoreRepository()
@@ -54,6 +55,10 @@ class CollectionDetailActivity : AppCompatActivity() {
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView)
         addItemFab = findViewById(R.id.addItemFab)
         viewStatsFab = findViewById(R.id.viewStatsFab)
+        collectionDescriptionTextView = findViewById(R.id.collectionDescriptionTextView)
+
+        // Setup de la descripció
+        collectionDescriptionTextView.text = getString(R.string.description_placeholder)
 
         // Configura el RecyclerView, igual que a Home
         itemsRecyclerView.layoutManager = LinearLayoutManager(this)
