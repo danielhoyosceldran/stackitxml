@@ -39,4 +39,6 @@
     <color name="warningBackgroundColor">#FF8F8F</color>
     <color name="warningForegroundColor">#AB5151</color>
 
+    <color name="colorOnSurfaceVariant">#757575</color>
+
 </resources>

@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp"
+    android:background="?android:attr/colorBackground"
     tools:context=".ui.auth.LoginActivity">
 
     <EditText
@@ -14,6 +15,7 @@
         android:layout_height="wrap_content"
         android:hint="Correu electrònic"
         android:inputType="textEmailAddress"
+        android:textColor="?attr/colorOnBackground"
         android:autofillHints="emailAddress" />
 
     <EditText
@@ -22,6 +24,7 @@
         android:layout_height="wrap_content"
         android:hint="Contrasenya"
         android:inputType="textPassword"
+        android:textColor="?attr/colorOnBackground"
         android:layout_marginTop="8dp"
         android:autofillHints="password" />
 

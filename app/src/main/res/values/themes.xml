@@ -17,8 +17,8 @@
         <item name="colorSurface">@color/surfaceColor</item>
         <item name="colorOnSurface">@color/onSurfaceColor</item>
 
-        <item name="colorError">@color/errorBackgroundColor</item> <!-- Utilitzem el color de fons per a errors -->
-        <item name="colorOnError">@color/errorForegroundColor</item> <!-- Utilitzem el color de text per a errors -->
+        <item name="colorError">@color/errorBackgroundColor</item>
+        <item name="colorOnError">@color/errorForegroundColor</item>
 
         <!-- Personalització de botons -->
         <!-- Estil per als botons elevats (per defecte) -->
@@ -41,12 +41,13 @@
         <item name="android:textColor">@color/primaryColor</item>
     </style>
 
+
     <!-- Tema per al Mode Fosc (values-night/themes.xml) -->
     <!-- Hauries de copiar aquest bloc al fitxer themes.xml dins de res/values-night/ -->
     <style name="Theme.Stackitxml.Night" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Colors del tema per a mode fosc -->
-        <item name="colorPrimary">#B28A3E</item> <!-- Utilitzem el groc més fort com a primari en mode fosc per contrast -->
-        <item name="colorPrimaryVariant">#8C6C2F</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/white</item>
 
         <item name="colorSecondary">#FFDC8F</item> <!-- El groc clar com a secundari en mode fosc -->

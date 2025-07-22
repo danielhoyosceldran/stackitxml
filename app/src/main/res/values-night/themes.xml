@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Tema per al Mode Fosc (values-night/themes.xml) -->
     <!-- Hauries de copiar aquest bloc al fitxer themes.xml dins de res/values-night/ -->
-    <style name="Theme.Stackitxml.Night" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Stackitxml" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Colors del tema per a mode fosc -->
         <item name="colorPrimary">#B28A3E</item> <!-- Utilitzem el groc més fort com a primari en mode fosc per contrast -->
         <item name="colorPrimaryVariant">#8C6C2F</item>
@@ -25,5 +25,15 @@
         <item name="buttonBarButtonStyle">@style/Widget.App.Button.TextButton.Night</item>
 
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="Widget.App.Button.Night" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/onPrimaryColor</item>
+        <item name="backgroundTint">@color/primaryColor</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="Widget.App.Button.TextButton.Night" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/primaryColor</item>
     </style>
 </resources>
