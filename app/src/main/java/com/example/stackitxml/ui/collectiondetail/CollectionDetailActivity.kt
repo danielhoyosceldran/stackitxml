@@ -27,7 +27,7 @@ class CollectionDetailActivity : AppCompatActivity() {
     private lateinit var shareCollectionButton: ImageButton
     private lateinit var itemsRecyclerView: RecyclerView
     private lateinit var addItemFab: FloatingActionButton
-    private lateinit var viewStatsFab: FloatingActionButton
+    private lateinit var viewStatsFab: Button
     private lateinit var collectionDescriptionTextView: TextView
 
     private lateinit var itemAdapter: ItemAdapter
@@ -142,11 +142,11 @@ class CollectionDetailActivity : AppCompatActivity() {
             val currentUserId = firestoreRepository.getCurrentUserId()
 
             if (itemName.isEmpty()) {
-                DialogUtils.showToast(this, "El nom de l'ítem no pot estar buit.")
+                DialogUtils.showToast(this, "The item name can't be empty")
                 return@setOnClickListener
             }
             if (currentUserId == null) {
-                DialogUtils.showLongToast(this, "Error: Usuari no autenticat. Torna a iniciar sessió.")
+                DialogUtils.showLongToast(this, getString(R.string.session_expired))
                 dialog.dismiss()
                 return@setOnClickListener
             }
@@ -155,11 +155,11 @@ class CollectionDetailActivity : AppCompatActivity() {
                     val newItem = Item(name = itemName, creatorId = currentUserId)
                     val result = firestoreRepository.addItemToCollection(collId, newItem)
                     result.onSuccess {
-                        DialogUtils.showToast(this@CollectionDetailActivity, "Ítem '${it.name}' afegit amb èxit!")
+                        DialogUtils.showToast(this@CollectionDetailActivity, "Item '${it.name}' added succesfuly")
                         dialog.dismiss()
                         loadItems() // Recarrega la llista d'ítems
                     }.onFailure { exception ->
-                        DialogUtils.showLongToast(this@CollectionDetailActivity, "Error a l'afegir ítem: ${exception.message}")
+                        DialogUtils.showLongToast(this@CollectionDetailActivity, "Error adding item: ${exception.message}")
                     }
                 }
             }
@@ -170,7 +170,7 @@ class CollectionDetailActivity : AppCompatActivity() {
     private fun updateItemCount(item: Item, change: Long) {
         val currentUserId = firestoreRepository.getCurrentUserId()
         if (currentUserId == null) {
-            DialogUtils.showLongToast(this, "Error: Usuari no autenticat. Torna a iniciar sessió.")
+            DialogUtils.showLongToast(this, getString(R.string.session_expired))
             return
         }
         collectionId?.let { collId ->

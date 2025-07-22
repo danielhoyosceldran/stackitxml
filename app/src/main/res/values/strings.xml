@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">StackIt</string>
     <string name="description_placeholder">Collection description...</string>
+
+    <string name="session_expired">Error: Session expired. Login</string>
+
+
+    <string name="statistics">Statistics</string>
+    <string name="help_see_statistics">See statistics</string>
+
+
 </resources>
