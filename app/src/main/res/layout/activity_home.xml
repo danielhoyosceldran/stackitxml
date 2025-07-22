@@ -61,6 +61,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:contentDescription="Afegir nova col·lecció"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@color/primaryDarkColor"/>
 
 </LinearLayout>

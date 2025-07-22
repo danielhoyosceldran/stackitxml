@@ -8,14 +8,14 @@
     <!-- Color principal de l'aplicació (groc clar) -->
     <color name="primaryColor">#FFDC8F</color>
     <!-- Variant del color principal (per a barra d'estat, etc. - un groc una mica més fosc) -->
-    <color name="primaryDarkColor">#E6C87C</color>
+    <color name="primaryDarkColor">#B28A3E</color>
     <!-- Color del text/icones sobre primaryColor (negre, ja que primaryColor és clar) -->
     <color name="onPrimaryColor">@color/black</color>
 
     <!-- Color d'accent (groc més fort) -->
-    <color name="secondaryColor">#B28A3E</color>
+    <color name="secondaryColor">#FFEECA</color>
     <!-- Variant del color secundari (un groc accent més fosc) -->
-    <color name="secondaryDarkColor">#8C6C2F</color>
+    <color name="secondaryDarkColor">#FFE5AD</color>
     <!-- Color del text/icones sobre secondaryColor (blanc, ja que secondaryColor és fosc) -->
     <color name="onSecondaryColor">@color/white</color>
 
