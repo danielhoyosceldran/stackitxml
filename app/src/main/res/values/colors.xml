@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colors bàsics de Material Design (sovint ja presents) -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Els teus colors personalitzats per al tema -->
+    <!-- Color principal de l'aplicació (groc clar) -->
+    <color name="primaryColor">#FFDC8F</color>
+    <!-- Variant del color principal (per a barra d'estat, etc. - un groc una mica més fosc) -->
+    <color name="primaryDarkColor">#E6C87C</color>
+    <!-- Color del text/icones sobre primaryColor (negre, ja que primaryColor és clar) -->
+    <color name="onPrimaryColor">@color/black</color>
+
+    <!-- Color d'accent (groc més fort) -->
+    <color name="secondaryColor">#B28A3E</color>
+    <!-- Variant del color secundari (un groc accent més fosc) -->
+    <color name="secondaryDarkColor">#8C6C2F</color>
+    <!-- Color del text/icones sobre secondaryColor (blanc, ja que secondaryColor és fosc) -->
+    <color name="onSecondaryColor">@color/white</color>
+
+    <!-- Colors de fons i text sobre fons -->
+    <color name="backgroundColor">@color/white</color> <!-- Fons general clar -->
+    <color name="onBackgroundColor">@color/black</color> <!-- Text sobre fons clar -->
+
+    <color name="surfaceColor">@color/white</color> <!-- Fons de components com Cards, Dialogs -->
+    <color name="onSurfaceColor">@color/black</color> <!-- Text sobre fons de components -->
+
+    <!-- Colors per a missatges d'estat -->
+    <color name="errorBackgroundColor">#FF8F8F</color>
+    <color name="errorForegroundColor">#AB5151</color>
+
+    <color name="infoBackgroundColor">#8FC5FF</color>
+    <color name="infoForegroundColor">#5067AB</color>
+
+    <color name="successBackgroundColor">#8FFF98</color>
+    <color name="successForegroundColor">#5FAB50</color>
+
+    <color name="warningBackgroundColor">#FF8FE3</color>
+    <color name="warningForegroundColor">#AB507B</color>
+
 </resources>
