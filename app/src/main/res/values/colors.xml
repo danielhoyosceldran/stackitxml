@@ -36,7 +36,7 @@
     <color name="successBackgroundColor">#8FFF98</color>
     <color name="successForegroundColor">#5FAB50</color>
 
-    <color name="warningBackgroundColor">#FF8FE3</color>
-    <color name="warningForegroundColor">#AB507B</color>
+    <color name="warningBackgroundColor">#FF8F8F</color>
+    <color name="warningForegroundColor">#AB5151</color>
 
 </resources>
