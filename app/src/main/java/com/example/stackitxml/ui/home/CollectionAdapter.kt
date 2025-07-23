@@ -18,7 +18,6 @@ class CollectionAdapter(
     class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val collectionNameTextView: TextView = itemView.findViewById(R.id.collectionNameTextView)
         val collectionDescriptionTextView: TextView = itemView.findViewById(R.id.collectionDescriptionTextView)
-        val collectionOwnerTextView: TextView = itemView.findViewById(R.id.collectionOwnerTextView)
         val collectionMembersCountTextView: TextView = itemView.findViewById(R.id.collectionMembersCountTextView)
     }
 
@@ -39,8 +38,6 @@ class CollectionAdapter(
         val collection = collections[position]
         holder.collectionNameTextView.text = collection.name
         holder.collectionDescriptionTextView.text = collection.description
-        // Mostra l'ownerId, però idealment hauries de buscar el username de l'ownerId
-        holder.collectionOwnerTextView.text = "Propietari ID: ${collection.ownerId}"
         holder.collectionMembersCountTextView.text = "Membres: ${collection.memberIds.size}"
 
         // Configura el listener de clic per a tot l'element de la llista

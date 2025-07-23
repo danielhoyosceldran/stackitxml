@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="text_primary">#121212</color>
+    <color name="text_secondary">#757575</color>
     <!-- Colors bàsics de Material Design (sovint ja presents) -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
@@ -27,16 +29,16 @@
     <color name="onSurfaceColor">@color/black</color> <!-- Text sobre fons de components -->
 
     <!-- Colors per a missatges d'estat -->
-    <color name="errorBackgroundColor">#FF8F8F</color>
+    <color name="errorBackgroundColor">#FFB5B5</color>
     <color name="errorForegroundColor">#AB5151</color>
 
-    <color name="infoBackgroundColor">#8FC5FF</color>
+    <color name="infoBackgroundColor">#B5D9FF</color>
     <color name="infoForegroundColor">#5067AB</color>
 
-    <color name="successBackgroundColor">#8FFF98</color>
+    <color name="successBackgroundColor">#BCFFB5</color>
     <color name="successForegroundColor">#5FAB50</color>
 
-    <color name="warningBackgroundColor">#FF8F8F</color>
+    <color name="warningBackgroundColor">#FFB5B5</color>
     <color name="warningForegroundColor">#AB5151</color>
 
     <color name="colorOnSurfaceVariant">#757575</color>

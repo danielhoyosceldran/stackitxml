@@ -1,12 +1,19 @@
 <resources>
     <string name="app_name">StackIt</string>
-    <string name="description_placeholder">Collection description...</string>
+
+    <string name="collection_description_placeholder">Collection description…</string>
+    <string name="collection_name_placeholder">Collection name</string>
+
+    <string name="help_see_statistics">See statistics</string>
+    <string name="help_share">Share collection</string>
+    <string name="help_logout">logout</string>
 
     <string name="session_expired">Error: Session expired. Login</string>
 
 
     <string name="statistics">Statistics</string>
-    <string name="help_see_statistics">See statistics</string>
+    <string name="collections">Collections</string>
+
 
 
 </resources>

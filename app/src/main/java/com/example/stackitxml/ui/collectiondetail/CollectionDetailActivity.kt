@@ -58,7 +58,7 @@ class CollectionDetailActivity : AppCompatActivity() {
         collectionDescriptionTextView = findViewById(R.id.collectionDescriptionTextView)
 
         // Setup de la descripció
-        collectionDescriptionTextView.text = getString(R.string.description_placeholder)
+        collectionDescriptionTextView.text = getString(R.string.collection_description_placeholder)
 
         // Configura el RecyclerView, igual que a Home
         itemsRecyclerView.layoutManager = LinearLayoutManager(this)

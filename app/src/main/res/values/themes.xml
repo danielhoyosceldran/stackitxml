@@ -40,43 +40,4 @@
     <style name="Widget.App.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/primaryColor</item>
     </style>
-
-
-    <!-- Tema per al Mode Fosc (values-night/themes.xml) -->
-    <!-- Hauries de copiar aquest bloc al fitxer themes.xml dins de res/values-night/ -->
-    <style name="Theme.Stackitxml.Night" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Colors del tema per a mode fosc -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/white</item>
-
-        <item name="colorSecondary">#FFDC8F</item> <!-- El groc clar com a secundari en mode fosc -->
-        <item name="colorSecondaryVariant">#E6C87C</item>
-        <item name="colorOnSecondary">@color/black</item>
-
-        <item name="android:colorBackground">@color/black</item> <!-- Fons general fosc -->
-        <item name="colorOnBackground">@color/white</item>
-
-        <item name="colorSurface">#1A1A1A</item> <!-- Fons de components fosc -->
-        <item name="colorOnSurface">@color/white</item>
-
-        <item name="colorError">@color/errorBackgroundColor</item>
-        <item name="colorOnError">@color/errorForegroundColor</item>
-
-        <!-- Estils de botons per a mode fosc -->
-        <item name="materialButtonStyle">@style/Widget.App.Button.Night</item>
-        <item name="buttonBarButtonStyle">@style/Widget.App.Button.TextButton.Night</item>
-
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-    </style>
-
-    <style name="Widget.App.Button.Night" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/onPrimaryColor</item>
-        <item name="backgroundTint">@color/primaryColor</item>
-        <item name="cornerRadius">8dp</item>
-    </style>
-
-    <style name="Widget.App.Button.TextButton.Night" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/primaryColor</item>
-    </style>
 </resources>

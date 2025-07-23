@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
     android:fitsSystemWindows="true"
-    tools:context=".ui.collectiondetail.CollectionDetailActivity">
+    tools:context=".ui.collectiondetail.CollectionDetailActivity"
+    android:layout_marginTop="12dp">
 
     <!-- Títol de la col·lecció -->
     <TextView
@@ -15,9 +16,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Nom de la Col·lecció"
-        android:textSize="24sp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/collection_name_placeholder"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/shareCollectionButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,11 +31,12 @@
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:background="?android:attr/colorBackground"
-        android:contentDescription="Compartir col·lecció"
+        android:contentDescription="@string/help_share"
         android:src="@android:drawable/ic_menu_share"
         app:layout_constraintBottom_toBottomOf="@+id/collectionDetailNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/collectionDetailNameTextView" />
+        app:layout_constraintTop_toTopOf="@+id/collectionDetailNameTextView"
+        app:tint="?android:attr/textColorPrimary"/>
 
     <!-- RecyclerView per mostrar els ítems de la col·lecció -->
     <androidx.recyclerview.widget.RecyclerView
@@ -62,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/collectionDetailNameTextView"
-        android:text="@string/description_placeholder"/>
+        android:text="@string/collection_description_placeholder"/>
 
     <!-- Botó per veure estadístiques -->
     <Button
@@ -77,10 +79,10 @@
         app:layout_constraintTop_toBottomOf="@+id/collectionDescriptionTextView"
         app:layout_constraintBottom_toTopOf="@+id/itemsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/secondaryColor"
+        android:backgroundTint="@color/infoBackgroundColor"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/help_see_statistics"
-        android:textColor="@color/primaryDarkColor"/>
+        android:textColor="@color/infoForegroundColor"/>
 
     <!-- Floating Action Button per afegir nous ítems -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

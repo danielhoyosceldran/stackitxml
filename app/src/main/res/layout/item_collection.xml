@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/secondaryColor">
 
         <TextView
             android:id="@+id/collectionNameTextView"
@@ -20,7 +21,8 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="Nom de la Col·lecció" />
+            android:text="Nom de la Col·lecció"
+            android:textColor="@color/primaryDarkColor"/>
 
         <TextView
             android:id="@+id/collectionDescriptionTextView"
@@ -28,16 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            android:text="Descripció de la col·lecció." />
-
-        <TextView
-            android:id="@+id/collectionOwnerTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="12sp"
-            android:text="Propietari: Usuari X"
-            android:textColor="@android:color/darker_gray" />
+            android:text="Descripció de la col·lecció."
+            android:textColor="@color/primaryDarkColor" />
 
         <TextView
             android:id="@+id/collectionMembersCountTextView"
@@ -46,7 +40,8 @@
             android:layout_marginTop="4dp"
             android:textSize="12sp"
             android:text="Membres: 1"
-            android:textColor="@android:color/darker_gray" />
+            android:textStyle="italic"
+            android:textColor="@color/primaryDarkColor" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
