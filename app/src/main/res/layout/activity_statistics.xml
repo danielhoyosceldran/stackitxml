@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:fitsSystemWindows="true"
     android:background="?android:attr/colorBackground"
-    tools:context=".ui.statistics.StatisticsActivity"
-    android:layout_marginTop="12dp">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.statistics.StatisticsActivity">
 
     <TextView
         android:id="@+id/statisticsTitleTextView"
@@ -18,8 +17,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:textColor="?attr/colorOnBackground"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp"
+        android:textColor="?attr/colorOnBackground"/>
 
     <TextView
         android:id="@+id/collectionNameStatsTextView"
@@ -28,44 +27,94 @@
         android:text="Col·lecció: [Nom de la Col·lecció]"
         android:textSize="20sp"
         android:textStyle="italic"
-        android:textColor="?attr/colorOnBackground"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:textColor="?attr/colorOnBackground"/>
 
     <TextView
-        android:id="@+id/mostCountedItemLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ítem més comptat:"
+        android:text="Global"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="?attr/colorOnBackground"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:textColor="?attr/colorOnBackground"/>
+
+    <!-- Contenidor de la taula -->
+    <LinearLayout
+        android:id="@+id/rankingTableContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/table_border"
+        android:padding="1dp"> <!-- Petit padding per al border -->
+
+        <!-- Fila de capçaleres de la taula -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="?attr/colorPrimaryVariant"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Ítem"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Comptes"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="14sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Col·laborador Principal"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="14sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="El meu compte"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="14sp"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- Aquí s'afegiran dinàmicament les files dels ítems -->
+        <LinearLayout
+            android:id="@+id/itemRowsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Les files dels ítems s'afegiran aquí programàticament -->
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/mostCountedItemTextView"
+        android:id="@+id/noItemsMessageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Carregant..."
-        android:textSize="16sp"
-        android:textColor="?attr/colorOnBackground"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:id="@+id/mostCountedByLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Comptat principalment per:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="?attr/colorOnBackground"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/mostCountedByTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Carregant..."
-        android:textColor="?attr/colorOnBackground"
-        android:textSize="16sp"/>
+        android:text="No hi ha ítems en aquesta col·lecció per mostrar estadístiques."
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:textColor="?attr/colorOnBackground"/>
 
 </LinearLayout>

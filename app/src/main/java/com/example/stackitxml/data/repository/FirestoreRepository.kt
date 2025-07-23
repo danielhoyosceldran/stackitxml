@@ -82,6 +82,17 @@ class FirestoreRepository {
         }
     }
 
+    //Obté tots els usuaris de la col·lecció 'users'.
+    suspend fun getAllUsers(): Result<List<User>> {
+        return try {
+            val querySnapshot = db.collection(Constants.COLLECTION_USERS).get().await()
+            val users = querySnapshot.documents.mapNotNull { it.toObject(User::class.java) }
+            Result.success(users)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     // Mètode per obtenir l'ID de l'usuari actual
     fun getCurrentUserId(): String? {
         return auth.currentUser?.uid
