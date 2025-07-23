@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.stackitxml.R
 import com.example.stackitxml.data.repository.FirestoreRepository
@@ -27,6 +29,7 @@ class    RegisterActivity : AppCompatActivity() {
         val passwordEditText: EditText = findViewById(R.id.passwordEditText)
         val usernameEditText: EditText = findViewById(R.id.usernameEditText)
         val registerButton: Button = findViewById(R.id.registerButton)
+        val loginTextView: TextView = findViewById(R.id.loginTextView)
 
         registerButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
@@ -50,6 +53,20 @@ class    RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this@RegisterActivity, "Error de registre: ${exception.message}", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+
+        // Carregar la vista de login
+        loginTextView.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            // Afegim opcions per a desactivar l'animació d'entrada
+            val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                0, // Animació per a la nova activitat
+                0  // Animació per a l'activitat que surt
+            )
+            startActivity(intent, options.toBundle())
+            finish()
         }
     }
 }

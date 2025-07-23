@@ -10,8 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.stackitxml.R
 import com.example.stackitxml.data.repository.FirestoreRepository
-import com.example.stackitxml.ui.home.HomeActivity // Encara no existeix, la crearem aviat
+import com.example.stackitxml.ui.home.HomeActivity
 import kotlinx.coroutines.launch
+import androidx.core.app.ActivityOptionsCompat
 
 class LoginActivity : AppCompatActivity() {
     // Objecte per a recuperar dades de Firestore
@@ -52,7 +53,16 @@ class LoginActivity : AppCompatActivity() {
 
         // Carregar la vista de registre
         registerTextView.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            val intent = Intent(this, RegisterActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            // Afegim opcions per a desactivar l'animació d'entrada
+            val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                0, // Animació per a la nova activitat
+                0  // Animació per a l'activitat que surt
+            )
+            startActivity(intent, options.toBundle())
+            finish()
         }
     }
 }

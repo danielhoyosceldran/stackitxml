@@ -3,6 +3,8 @@
 
     <string name="collection_description_placeholder">Collection description…</string>
     <string name="collection_name_placeholder">Collection name</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="create_account">Create account</string>"
 
     <string name="help_see_statistics">See statistics</string>
     <string name="help_share">Share collection</string>
