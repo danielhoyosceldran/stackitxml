@@ -24,6 +24,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Botó per a editar la col·lecció -->
+    <ImageButton
+        android:id="@+id/editCollectionButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:background="?android:attr/colorBackground"
+        android:contentDescription="@string/help_share"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_constraintBottom_toBottomOf="@+id/collectionDetailNameTextView"
+        app:layout_constraintEnd_toStartOf="@+id/shareCollectionButton"
+        app:layout_constraintTop_toTopOf="@+id/collectionDetailNameTextView"
+        app:tint="?android:attr/textColorPrimary"/>
+
     <!-- Botó per compartir la col·lecció -->
     <ImageButton
         android:id="@+id/shareCollectionButton"

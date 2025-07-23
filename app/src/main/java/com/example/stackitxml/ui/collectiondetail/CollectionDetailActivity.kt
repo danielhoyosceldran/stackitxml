@@ -29,9 +29,12 @@ class CollectionDetailActivity : AppCompatActivity() {
     private lateinit var addItemFab: FloatingActionButton
     private lateinit var viewStatsFab: Button
     private lateinit var collectionDescriptionTextView: TextView
+    private lateinit var editCollectionButton: ImageButton
 
     private lateinit var itemAdapter: ItemAdapter
     private val firestoreRepository = FirestoreRepository()
+
+    private var isEdicCollectionButtonVisible = false;
 
     private var collectionId: String? = null // ID de la col·lecció actual
 
@@ -56,15 +59,17 @@ class CollectionDetailActivity : AppCompatActivity() {
         addItemFab = findViewById(R.id.addItemFab)
         viewStatsFab = findViewById(R.id.viewStatsFab)
         collectionDescriptionTextView = findViewById(R.id.collectionDescriptionTextView)
+        editCollectionButton = findViewById(R.id.editCollectionButton)
 
         // Setup de la descripció
         collectionDescriptionTextView.text = getString(R.string.collection_description_placeholder)
 
-        // Configura el RecyclerView, igual que a Home
+        // Configura el RecyclerView
         itemsRecyclerView.layoutManager = LinearLayoutManager(this)
         itemAdapter = ItemAdapter(emptyList(),
             onAddClick = { item -> updateItemCount(item, 1) }, // Sumar 1
-            onSubtractClick = { item -> updateItemCount(item, -1) } // Restar 1
+            onSubtractClick = { item -> updateItemCount(item, -1) }, // Restar 1
+            showEditCollectionButton = false // No mostrar el botó per editar
         )
         itemsRecyclerView.adapter = itemAdapter
 
@@ -88,6 +93,13 @@ class CollectionDetailActivity : AppCompatActivity() {
                 putExtra(Constants.EXTRA_COLLECTION_ID, collectionId)
             }
             startActivity(intent)
+        }
+
+        // configura listener de l'edit de la colecció
+        editCollectionButton.setOnClickListener {
+            isEdicCollectionButtonVisible = !isEdicCollectionButtonVisible
+            itemAdapter.toggleNewButtonVisibility(isEdicCollectionButtonVisible)
+            DialogUtils.showToast(this, "Edit Collection mode: ${if (isEdicCollectionButtonVisible) "ON" else "FALSE"}")
         }
     }
 
