@@ -16,6 +16,7 @@ class ItemAdapter(
     private var items: List<Item>,
     private val onAddClick: (Item) -> Unit,
     private val onSubtractClick: (Item) -> Unit,
+    private val onDeleteItemClick: (Item) -> Unit,
     private var showEditCollectionButton: Boolean
 ) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
@@ -29,7 +30,7 @@ class ItemAdapter(
         val personalCountTextView: TextView = itemView.findViewById(R.id.personalCountTextView)
         val subtractButton: Button = itemView.findViewById(R.id.subtractButton)
         val addButton: Button = itemView.findViewById(R.id.addButton)
-        val editCollectionButton: ImageButton = itemView.findViewById(R.id.deleteItemButton)
+        val deleteItemButton: ImageButton = itemView.findViewById(R.id.deleteItemButton)
     }
 
     // Crea i retorna un nou ViewHolder.
@@ -50,11 +51,13 @@ class ItemAdapter(
         val userCount = item.personalCount[currentUserId] ?: 0L
         holder.personalCountTextView.text = userCount.toString()
 
-        holder.editCollectionButton.visibility = if (showEditCollectionButton) View.VISIBLE else View.GONE
+        holder.deleteItemButton.visibility = if (showEditCollectionButton) View.VISIBLE else View.GONE
 
         // Configura els listeners dels botons
         holder.addButton.setOnClickListener { onAddClick(item) }
         holder.subtractButton.setOnClickListener { onSubtractClick(item) }
+
+        holder.deleteItemButton.setOnClickListener { onDeleteItemClick(item) }
     }
 
     override fun getItemCount(): Int {

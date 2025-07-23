@@ -260,4 +260,18 @@ class FirestoreRepository {
             Result.failure(e)
         }
     }
+
+    suspend fun deleteItem(collectionId: String, itemId: String): Result<Unit> {
+        return try {
+            db.collection(Constants.COLLECTION_COLLECTIONS)
+                .document(collectionId)
+                .collection(Constants.COLLECTION_ITEMS)
+                .document(itemId)
+                .delete()
+                .await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

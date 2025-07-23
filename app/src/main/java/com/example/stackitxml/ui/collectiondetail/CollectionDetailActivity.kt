@@ -47,7 +47,7 @@ class CollectionDetailActivity : AppCompatActivity() {
         collectionId = intent.getStringExtra(Constants.EXTRA_COLLECTION_ID)
 
         if (collectionId == null) {
-            DialogUtils.showLongToast(this, "Error: No s'ha trobat l'ID de la col·lecció.")
+            DialogUtils.showLongToast(this, "Error: Collection ID not found.")
             finish() // Tanca l'activitat si no hi ha ID
             return
         }
@@ -67,9 +67,10 @@ class CollectionDetailActivity : AppCompatActivity() {
         // Configura el RecyclerView
         itemsRecyclerView.layoutManager = LinearLayoutManager(this)
         itemAdapter = ItemAdapter(emptyList(),
-            onAddClick = { item -> updateItemCount(item, 1) }, // Sumar 1
-            onSubtractClick = { item -> updateItemCount(item, -1) }, // Restar 1
-            showEditCollectionButton = false // No mostrar el botó per editar
+            onAddClick = { item -> updateItemCount(item, 1) },
+            onSubtractClick = { item -> updateItemCount(item, -1) },
+            onDeleteItemClick = { item -> showConfirmDeleteItemDialog(item) },
+            showEditCollectionButton = false
         )
         itemsRecyclerView.adapter = itemAdapter
 
@@ -112,7 +113,7 @@ class CollectionDetailActivity : AppCompatActivity() {
                     collectionDetailNameTextView.text = collection.name
                     collectionDescriptionTextView.text = collection.description
                 }.onFailure { exception ->
-                    DialogUtils.showLongToast(this@CollectionDetailActivity, "Error en carregar detalls de la col·lecció: ${exception.message}")
+                    DialogUtils.showLongToast(this@CollectionDetailActivity, "Error loading collection details: ${exception.message}")
                     finish() // Tanca si no es poden carregar els detalls
                 }
             }
@@ -127,10 +128,10 @@ class CollectionDetailActivity : AppCompatActivity() {
                 result.onSuccess { items ->
                     itemAdapter.updateItems(items)
                     if (items.isEmpty()) {
-                        DialogUtils.showToast(this@CollectionDetailActivity, "Aquesta col·lecció no té ítems. Afegeix-ne un!")
+                        DialogUtils.showToast(this@CollectionDetailActivity, "This collection has no items. Add one!")
                     }
                 }.onFailure { exception ->
-                    DialogUtils.showLongToast(this@CollectionDetailActivity, "Error en carregar ítems: ${exception.message}")
+                    DialogUtils.showLongToast(this@CollectionDetailActivity, "Error loading items: ${exception.message}")
                 }
             }
         }
@@ -194,7 +195,7 @@ class CollectionDetailActivity : AppCompatActivity() {
                 result.onSuccess {
                     loadItems() // todo: revisar si cal carregar tot l'element o podem sumar directament el nou comptador
                 }.onFailure { exception ->
-                    DialogUtils.showLongToast(this@CollectionDetailActivity, "Error a l'actualitzar comptador: ${exception.message}")
+                    DialogUtils.showLongToast(this@CollectionDetailActivity, "Error updating counter: ${exception.message}")
                 }
             }
         }
@@ -215,22 +216,56 @@ class CollectionDetailActivity : AppCompatActivity() {
         shareButton.setOnClickListener {
             val emailToShareWith = emailEditText.text.toString().trim()
             if (emailToShareWith.isEmpty()) {
-                DialogUtils.showToast(this, "Introdueix un correu electrònic per compartir.")
+                DialogUtils.showToast(this, "Enter an email to share.")
                 return@setOnClickListener
             }
             collectionId?.let { collId ->
                 lifecycleScope.launch {
                     val result = firestoreRepository.shareCollection(collId, emailToShareWith)
                     result.onSuccess {
-                        DialogUtils.showToast(this@CollectionDetailActivity, "Col·lecció compartida amb èxit!")
+                        DialogUtils.showToast(this@CollectionDetailActivity, "Collection shared successfully!")
                         dialog.dismiss()
                     }.onFailure { exception ->
-                        DialogUtils.showLongToast(this@CollectionDetailActivity, "Error al compartir col·lecció: ${exception.message}")
+                        DialogUtils.showLongToast(this@CollectionDetailActivity, "Error sharing collection: ${exception.message}")
                     }
                 }
             }
         }
         dialog.show()
+    }
+
+    // Diàleg per a confirmar el fet d'eliminar un item
+    private fun showConfirmDeleteItemDialog(item: Item) {
+        AlertDialog.Builder(this)
+            .setTitle("Confirm deletion")
+            .setMessage("Are you sure you want to delete the item '${item.name}'?")
+            .setPositiveButton("Delete") { dialog, _ ->
+                deleteItem(item)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel·lar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    // Funció per a eliminar un item
+    private fun deleteItem(item: Item) {
+        val currentCollId = collectionId
+        if (currentCollId == null) {
+            DialogUtils.showLongToast(this, "Error: Collection not found to delete the item.")
+            return
+        }
+
+        lifecycleScope.launch {
+            val result = firestoreRepository.deleteItem(currentCollId, item.itemId)
+            result.onSuccess {
+                DialogUtils.showToast(this@CollectionDetailActivity, "Item '${item.name}' deleted successfully!")
+                loadItems() // Recarrega la llista d'ítems
+            }.onFailure { exception ->
+                DialogUtils.showLongToast(this@CollectionDetailActivity, "Error deleting item: ${exception.message}")
+            }
+        }
     }
 
     // Recarrega els ítems cada vegada que l'activitat es torna visible
