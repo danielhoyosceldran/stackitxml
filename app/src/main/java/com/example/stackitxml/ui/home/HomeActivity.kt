@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stackitxml.R
-import com.example.stackitxml.data.model.Collection
 import com.example.stackitxml.data.repository.FirestoreRepository
 import com.example.stackitxml.ui.auth.LoginActivity
 import com.example.stackitxml.ui.collectiondetail.CollectionDetailActivity
@@ -31,13 +30,16 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var addCollectionFab: FloatingActionButton
     private lateinit var homeTitleTextView: TextView
     private lateinit var logoutButton: ImageButton
+    private lateinit var editCollectionsButton: ImageButton
 
     private lateinit var collectionAdapter: CollectionAdapter
     private val firestoreRepository = FirestoreRepository()
 
+    private var isEditCollectionsButtonVisible = false;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge() // Pel tema de la barra de notificacions
+        enableEdgeToEdge()
         setContentView(R.layout.activity_home) // Enllaça la view XML a aquest fitxer
 
         // Aplica els insets a la vista arrel per evitar superposició amb barres i elements del mobil
@@ -47,18 +49,20 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-
         // Carreguem els elements de la UI
         collectionsRecyclerView = findViewById(R.id.collectionsRecyclerView)
         addCollectionFab = findViewById(R.id.addCollectionFab)
         homeTitleTextView = findViewById(R.id.homeTitleTextView)
         logoutButton = findViewById(R.id.logoutButton)
+        editCollectionsButton = findViewById(R.id.editCollectionsButton)
 
         // Configura el RecyclerView (la llista de col·leccions)
         collectionsRecyclerView.layoutManager = LinearLayoutManager(this)
         // Inicialitzem el collectionAdapter buit, fins que omplim amb dades de la BBDD
         // collection adapter és, com diu el nom un adabtador. Ho tinc apuntat a la docu
-        collectionAdapter = CollectionAdapter(emptyList()) { collection ->
+        collectionAdapter = CollectionAdapter(
+            emptyList(),
+            showEditCollectionsButton = false) { collection ->
             // Intents explicats a la docu
             val intent = Intent(this, CollectionDetailActivity::class.java).apply {
                 putExtra(Constants.EXTRA_COLLECTION_ID, collection.collectionId)
@@ -70,6 +74,13 @@ class HomeActivity : AppCompatActivity() {
         // Configura el botó flotant per afegir col·leccions
         addCollectionFab.setOnClickListener {
             showAddCollectionDialog()
+        }
+
+        // configura el listener per al botó d'eliminar col·lecció
+        editCollectionsButton.setOnClickListener {
+            isEditCollectionsButtonVisible = !isEditCollectionsButtonVisible
+            collectionAdapter.toggleDeleteCollectionVisibility(isEditCollectionsButtonVisible)
+            DialogUtils.showToast(this, "Edit Collection mode: ${if (isEditCollectionsButtonVisible) "ON" else "OFF"}")
         }
 
         // Configura el listener per al botó de Log Out

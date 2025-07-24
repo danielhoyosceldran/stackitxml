@@ -69,7 +69,7 @@ class ItemAdapter(
         notifyDataSetChanged()
     }
 
-    fun toggleNewButtonVisibility(isVisible: Boolean) {
+    fun toggleDeleteItemVisibility(isVisible: Boolean) {
         this.showEditCollectionButton = isVisible
         notifyDataSetChanged()
     }

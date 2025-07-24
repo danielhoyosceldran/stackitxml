@@ -34,7 +34,7 @@ class CollectionDetailActivity : AppCompatActivity() {
     private lateinit var itemAdapter: ItemAdapter
     private val firestoreRepository = FirestoreRepository()
 
-    private var isEdicCollectionButtonVisible = false;
+    private var isEditCollectionButtonVisible = false;
 
     private var collectionId: String? = null // ID de la col·lecció actual
 
@@ -98,9 +98,9 @@ class CollectionDetailActivity : AppCompatActivity() {
 
         // configura listener de l'edit de la colecció
         editCollectionButton.setOnClickListener {
-            isEdicCollectionButtonVisible = !isEdicCollectionButtonVisible
-            itemAdapter.toggleNewButtonVisibility(isEdicCollectionButtonVisible)
-            DialogUtils.showToast(this, "Edit Collection mode: ${if (isEdicCollectionButtonVisible) "ON" else "FALSE"}")
+            isEditCollectionButtonVisible = !isEditCollectionButtonVisible
+            itemAdapter.toggleDeleteItemVisibility(isEditCollectionButtonVisible)
+            DialogUtils.showToast(this, "Edit Collection mode: ${if (isEditCollectionButtonVisible) "ON" else "OFF"}")
         }
     }
 

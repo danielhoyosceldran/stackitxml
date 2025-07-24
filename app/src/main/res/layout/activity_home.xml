@@ -21,12 +21,23 @@
         <TextView
             android:id="@+id/homeTitleTextView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:text="@string/collections"
             android:layout_marginEnd="32dp"
             android:textSize="32sp"
             android:textStyle="bold"
             android:layout_weight="1"/>
+
+        <!-- Botó per a editar la col·leccions -->
+        <ImageButton
+            android:id="@+id/editCollectionsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/colorBackground"
+            android:contentDescription="@string/help_share"
+            android:src="@android:drawable/ic_menu_edit"
+            app:tint="?android:attr/textColorPrimary"/>
 
         <!-- Botó de Log Out -->
         <ImageButton
@@ -36,9 +47,6 @@
             android:background="?android:attr/colorBackground"
             android:contentDescription="@string/help_logout"
             android:src="@android:drawable/ic_lock_power_off"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/homeTitleTextView"
             android:scaleType="fitCenter" />
     </LinearLayout>
 

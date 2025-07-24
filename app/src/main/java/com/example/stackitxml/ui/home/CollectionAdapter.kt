@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stackitxml.R
 import com.example.stackitxml.data.model.Collection
@@ -12,7 +13,8 @@ import com.google.firebase.auth.FirebaseAuth
 // Adaptador per al RecyclerView que mostra la llista de col·leccions.
 class CollectionAdapter(
     private var collections: List<Collection>,
-    private val onItemClick: (Collection) -> Unit
+    private var showEditCollectionsButton: Boolean,
+    private val onItemClick: (Collection) -> Unit,
 ) : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
     private val currentUserId: String? = FirebaseAuth.getInstance().currentUser?.uid
@@ -24,6 +26,7 @@ class CollectionAdapter(
         val collectionDescriptionTextView: TextView = itemView.findViewById(R.id.collectionDescriptionTextView)
         val collectionMembersCountTextView: TextView = itemView.findViewById(R.id.collectionMembersCountTextView)
         val collectionOwnerTextView: TextView = itemView.findViewById(R.id.collectionOwnerTextView)
+        val deleteCollectionButton: ImageButton = itemView.findViewById(R.id.deleteCollectionButton)
     }
 
      // Crea i retorna un nou ViewHolder.
@@ -49,6 +52,7 @@ class CollectionAdapter(
              holder.collectionOwnerTextView.visibility = View.GONE
          }
 
+         holder.deleteCollectionButton.visibility = if (showEditCollectionsButton) View.VISIBLE else View.GONE
 
         // Configura el listener de clic per a tot l'element de la llista
         holder.itemView.setOnClickListener {
@@ -63,5 +67,10 @@ class CollectionAdapter(
     fun updateCollections(newCollections: List<Collection>) {
         this.collections = newCollections
         notifyDataSetChanged() // Notifica a l'adaptador que les dades han canviat
+    }
+
+    fun toggleDeleteCollectionVisibility(isVisible: Boolean) {
+        this.showEditCollectionsButton = isVisible
+        notifyDataSetChanged()
     }
 }
