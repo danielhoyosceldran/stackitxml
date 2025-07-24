@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.stackitxml.R
 import com.example.stackitxml.data.repository.FirestoreRepository
 import com.example.stackitxml.ui.auth.LoginActivity
+import com.example.stackitxml.data.model.Collection
 import com.example.stackitxml.ui.collectiondetail.CollectionDetailActivity
 import com.example.stackitxml.util.Constants
 import com.example.stackitxml.util.DialogUtils
@@ -62,13 +63,15 @@ class HomeActivity : AppCompatActivity() {
         // collection adapter és, com diu el nom un adabtador. Ho tinc apuntat a la docu
         collectionAdapter = CollectionAdapter(
             emptyList(),
-            showEditCollectionsButton = false) { collection ->
-            // Intents explicats a la docu
-            val intent = Intent(this, CollectionDetailActivity::class.java).apply {
-                putExtra(Constants.EXTRA_COLLECTION_ID, collection.collectionId)
-            }
-            startActivity(intent)
-        }
+            onItemClick = { collection ->
+                val intent = Intent(this, CollectionDetailActivity::class.java).apply {
+                    putExtra(Constants.EXTRA_COLLECTION_ID, collection.collectionId)
+                }
+                startActivity(intent)
+            },
+            showEditCollectionsButton = false,
+            onDeleteCollectionClick = { collection -> showConfirmDeleteCollectionDialog(collection) } // Passa la lògica d'eliminar
+        )
         collectionsRecyclerView.adapter = collectionAdapter
 
         // Configura el botó flotant per afegir col·leccions
@@ -159,6 +162,34 @@ class HomeActivity : AppCompatActivity() {
                 collectionAdapter.updateCollections(collections)
             }.onFailure { exception ->
                 DialogUtils.showLongToast(this@HomeActivity, "Error en carregar col·leccions: ${exception.message}")
+            }
+        }
+    }
+
+    // Mostra un diàleg de confirmació abans d'eliminar una col·lecció.
+    private fun showConfirmDeleteCollectionDialog(collection: Collection) {
+        AlertDialog.Builder(this)
+            .setTitle("Confirmar eliminació")
+            .setMessage("Estàs segur que vols eliminar la col·lecció '${collection.name}'? Això eliminarà tots els seus ítems i la desvincularà de tots els usuaris.")
+            .setPositiveButton("Eliminar") { dialog, _ ->
+                deleteCollection(collection.collectionId)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel·lar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    // Elimina una col·lecció de la base de dades.
+    private fun deleteCollection(collectionId: String) {
+        lifecycleScope.launch {
+            val result = firestoreRepository.deleteCollection(collectionId)
+            result.onSuccess {
+                DialogUtils.showToast(this@HomeActivity, "Col·lecció eliminada amb èxit!")
+                loadCollections() // Recarrega la llista de col·leccions
+            }.onFailure { exception ->
+                DialogUtils.showLongToast(this@HomeActivity, "Error a l'eliminar col·lecció: ${exception.message}")
             }
         }
     }

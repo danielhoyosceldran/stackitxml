@@ -70,7 +70,7 @@ class CollectionDetailActivity : AppCompatActivity() {
             onAddClick = { item -> updateItemCount(item, 1) },
             onSubtractClick = { item -> updateItemCount(item, -1) },
             onDeleteItemClick = { item -> showConfirmDeleteItemDialog(item) },
-            showEditCollectionButton = false
+            showEditCollectionButton = false,
         )
         itemsRecyclerView.adapter = itemAdapter
 

@@ -285,4 +285,47 @@ class FirestoreRepository {
             Result.failure(e)
         }
     }
+
+    /**
+     * Elimina una col·lecció i tots els seus ítems, i l'elimina de les llistes accessibles de tots els usuaris membres.
+     * @param collectionId L'ID de la col·lecció a eliminar.
+     */
+    suspend fun deleteCollection(collectionId: String): Result<Unit> {
+        return try {
+            // 1. Obtenir la col·lecció per obtenir la llista de membres
+            val collectionDoc = db.collection(Constants.COLLECTION_COLLECTIONS).document(collectionId).get().await()
+            val collectionToDelete = collectionDoc.toObject(Collection::class.java)
+                ?: return Result.failure(Exception("Col·lecció no trobada per eliminar."))
+
+            val memberIds = collectionToDelete.memberIds
+
+            // 2. Eliminar la col·lecció de la llista accessible de cada membre
+            // todo: Per a un gran nombre d'usuaris, això hauria de ser gestionat amb Cloud Functions
+            // per evitar un gran nombre d'escriptures des del client.
+            for (memberId in memberIds) {
+                db.collection(Constants.COLLECTION_USERS).document(memberId)
+                    .update("accessibleCollectionIds", FieldValue.arrayRemove(collectionId))
+                    .await()
+            }
+
+            // 3. Eliminar tots els ítems de la subcol·lecció
+            // Firestore no elimina subcol·leccions automàticament. Cal eliminar els documents un per un.
+            val itemsSnapshot = db.collection(Constants.COLLECTION_COLLECTIONS)
+                .document(collectionId)
+                .collection(Constants.COLLECTION_ITEMS)
+                .get()
+                .await()
+
+            for (itemDoc in itemsSnapshot.documents) {
+                itemDoc.reference.delete().await()
+            }
+
+            // 4. Eliminar el document principal de la col·lecció
+            db.collection(Constants.COLLECTION_COLLECTIONS).document(collectionId).delete().await()
+
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

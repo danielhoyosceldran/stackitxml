@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 class CollectionAdapter(
     private var collections: List<Collection>,
     private var showEditCollectionsButton: Boolean,
+    private val onDeleteCollectionClick: (Collection) -> Unit,
     private val onItemClick: (Collection) -> Unit,
 ) : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
@@ -48,6 +49,9 @@ class CollectionAdapter(
          // Lògica per mostrar/ocultar el TextView de propietat de la col·lecció
          if (currentUserId != null && collection.ownerId == currentUserId) {
              holder.collectionOwnerTextView.visibility = View.VISIBLE
+             holder.deleteCollectionButton.setOnClickListener {
+                 onDeleteCollectionClick(collection) // Crida la lambda de supressió
+             }
          } else {
              holder.collectionOwnerTextView.visibility = View.GONE
          }
