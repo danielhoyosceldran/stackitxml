@@ -7,11 +7,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stackitxml.R
 import com.example.stackitxml.data.model.Collection
+import com.google.firebase.auth.FirebaseAuth
+
 // Adaptador per al RecyclerView que mostra la llista de col·leccions.
 class CollectionAdapter(
     private var collections: List<Collection>,
     private val onItemClick: (Collection) -> Unit
 ) : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
+
+    private val currentUserId: String? = FirebaseAuth.getInstance().currentUser?.uid
 
     // ViewHolder per a cada element de la col·lecció a la llista.
     // Conté le les referències a vistes del layout item_collection.xml.
@@ -19,8 +23,8 @@ class CollectionAdapter(
         val collectionNameTextView: TextView = itemView.findViewById(R.id.collectionNameTextView)
         val collectionDescriptionTextView: TextView = itemView.findViewById(R.id.collectionDescriptionTextView)
         val collectionMembersCountTextView: TextView = itemView.findViewById(R.id.collectionMembersCountTextView)
+        val collectionOwnerTextView: TextView = itemView.findViewById(R.id.collectionOwnerTextView)
     }
-
 
      // Crea i retorna un nou ViewHolder.
      // S'invoca quan el RecyclerView necessita un nou ViewHolder per representar un element.
@@ -30,7 +34,6 @@ class CollectionAdapter(
         return CollectionViewHolder(view)
     }
 
-
      // Vincula les dades d'una col·lecció a un ViewHolder.
      // S'invoca per actualitzar el contingut d'un ViewHolder existent amb noves dades.
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) {
@@ -38,6 +41,14 @@ class CollectionAdapter(
         holder.collectionNameTextView.text = collection.name
         holder.collectionDescriptionTextView.text = collection.description
         holder.collectionMembersCountTextView.text = "Membres: ${collection.memberIds.size}"
+
+         // Lògica per mostrar/ocultar el TextView de propietat de la col·lecció
+         if (currentUserId != null && collection.ownerId == currentUserId) {
+             holder.collectionOwnerTextView.visibility = View.VISIBLE
+         } else {
+             holder.collectionOwnerTextView.visibility = View.GONE
+         }
+
 
         // Configura el listener de clic per a tot l'element de la llista
         holder.itemView.setOnClickListener {
