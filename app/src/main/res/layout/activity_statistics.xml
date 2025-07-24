@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     android:background="?android:attr/colorBackground"
     android:fitsSystemWindows="true"
     tools:context=".ui.statistics.StatisticsActivity">
@@ -13,30 +12,26 @@
         android:id="@+id/statisticsTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Estadístiques de la Col·lecció"
-        android:textSize="24sp"
+        android:text="@string/statistics"
+        android:textSize="32sp"
         android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart  ="16dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="24dp"
         android:textColor="?attr/colorOnBackground"/>
 
     <TextView
         android:id="@+id/collectionNameStatsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Col·lecció: [Nom de la Col·lecció]"
+        android:text="[Nom de la Col·lecció]"
         android:textSize="20sp"
         android:textStyle="italic"
         android:layout_marginBottom="16dp"
-        android:textColor="?attr/colorOnBackground"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Global"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="center_horizontal"
         android:textColor="?attr/colorOnBackground"/>
 
     <!-- Contenidor de la taula -->
@@ -46,6 +41,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/table_border"
+        android:layout_margin="16dp"
         android:padding="1dp"> <!-- Petit padding per al border -->
 
         <!-- Fila de capçaleres de la taula -->

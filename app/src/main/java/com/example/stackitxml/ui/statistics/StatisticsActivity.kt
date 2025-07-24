@@ -65,10 +65,10 @@ class StatisticsActivity : AppCompatActivity() {
                     // Obtenir el nom de la col·lecció
                     val collectionResult = firestoreRepository.getCollectionById(collId)
                     collectionResult.onSuccess { collection ->
-                        collectionNameStatsTextView.text = "Col·lecció: ${collection.name}"
+                        collectionNameStatsTextView.text = "${collection.name}"
                     }.onFailure { exception ->
                         DialogUtils.showLongToast(this@StatisticsActivity, "Error en carregar nom de la col·lecció: ${exception.message}")
-                        collectionNameStatsTextView.text = "Col·lecció: Desconeguda"
+                        collectionNameStatsTextView.text = "desconeguda"
                     }
 
                     // Obtenir tots els ítems de la col·lecció
