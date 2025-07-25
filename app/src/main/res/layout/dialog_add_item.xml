@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Afegir Nou Ítem"
+        android:text="@string/add_new_item"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
@@ -18,7 +18,7 @@
         android:id="@+id/itemNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nom de l'ítem"
+        android:hint="@string/name_of_the_new_item"
         android:inputType="textCapSentences"
         android:autofillHints="name" />
 
@@ -34,7 +34,7 @@
             style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel·lar"
+            android:text="@string/cancel"
             android:textColor="?attr/colorOnPrimary" />
 
         <Button
@@ -43,7 +43,7 @@
             android:textColor="?attr/colorOnPrimarySurface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Afegir"
+            android:text="@string/add"
             android:layout_marginStart="8dp" />
 
     </LinearLayout>

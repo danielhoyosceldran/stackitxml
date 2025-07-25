@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Afegir Nova Col·lecció"
+        android:text="@string/add_new_collection"
         style="@style/TextAppearance.App.H2"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
@@ -18,7 +18,7 @@
         android:id="@+id/collectionNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nom de la col·lecció"
+        android:hint="@string/name_of_the_collection"
         android:inputType="textCapSentences"
         android:autofillHints="name" />
 
@@ -26,7 +26,7 @@
         android:id="@+id/collectionDescriptionEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descripció (opcional)"
+        android:hint="@string/description_of_the_collection_optional"
         android:inputType="textMultiLine"
         android:lines="3"
         android:gravity="top"
@@ -45,7 +45,7 @@
             style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel·lar"
+            android:text="@string/cancel"
             android:textColor="?attr/colorOnPrimary" />
 
         <Button
@@ -54,7 +54,7 @@
             android:textColor="?attr/colorOnPrimarySurface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crear"
+            android:text="@string/create"
             android:layout_marginStart="8dp" />
 
     </LinearLayout>

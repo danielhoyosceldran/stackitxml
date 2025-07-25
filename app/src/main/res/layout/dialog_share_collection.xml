@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Compartir Col·lecció"
+        android:text="@string/share_collection"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
@@ -18,7 +18,7 @@
         android:id="@+id/shareEmailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Correu electrònic de l'usuari"
+        android:hint="@string/e_mail_of_the_user_to_add"
         android:inputType="textEmailAddress"
         android:autofillHints="emailAddress" />
 
@@ -34,7 +34,7 @@
             style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel·lar"
+            android:text="@string/cancel"
             android:textColor="?attr/colorOnPrimary" />
 
         <Button
@@ -43,7 +43,7 @@
             android:textColor="?attr/colorOnPrimarySurface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Compartir"
+            android:text="@string/share"
             android:layout_marginStart="8dp" />
 
     </LinearLayout>

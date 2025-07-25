@@ -3,7 +3,13 @@
 
     <!--Auth screens-->
     <string name="create_account">Create account</string>"
-    <string name="already_have_an_account">Already have an account?</string>
+    <string name="already_have_an_account">Already have an account? Log In</string>
+    <string name="email_placeholder">example@gmail.com</string>
+    <string name="password_placeholder">Password</string>
+    <string name="username_placeholder">Username</string>
+
+    <string name="login_button">Log In</string>
+    <string name="register_button">Register</string>
 
     <!--Home screen-->
     <string name="collections">Collections</string>
@@ -39,4 +45,17 @@
     <string name="row_item_count">0</string>
     <string name="row_item_main_contributor">user (count)</string>
     <string name="row_item_my_count">0</string>
+    <string name="add_new_item">Add new item</string>
+    <string name="name_of_the_new_item">Name of the new item</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="add_new_collection">Add new collection</string>
+    <string name="name_of_the_collection">Name of the collection</string>
+    <string name="description_of_the_collection_optional">Description of the collection (optional)</string>
+    <string name="create">Create</string>
+    <string name="e_mail_of_the_user_to_add">E-Mail of the user to add</string>
+    <string name="share_collection">Share collection</string>
+    <string name="share">Share</string>
+    <string name="substract_count">-</string>
+    <string name="add_count">+</string>
 </resources>

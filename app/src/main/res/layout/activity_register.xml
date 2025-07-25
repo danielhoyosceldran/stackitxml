@@ -22,7 +22,7 @@
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Correu electrònic"
+        android:hint="@string/email_placeholder"
         android:inputType="textEmailAddress"
         android:textColor="?attr/colorOnBackground"
         android:autofillHints="emailAddress" />
@@ -31,7 +31,7 @@
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contrasenya"
+        android:hint="@string/password_placeholder"
         android:inputType="textPassword"
         android:textColor="?attr/colorOnBackground"
         android:layout_marginTop="8dp"
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="?attr/colorOnBackground"
-        android:hint="Nom d'usuari (únic)"
+        android:hint="@string/username_placeholder"
         android:inputType="textPersonName"
         android:layout_marginTop="8dp"
         android:autofillHints="username" />
@@ -51,7 +51,7 @@
         android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registrar-se"
+        android:text="@string/register_button"
         android:layout_marginTop="16dp"/>
 
     <TextView
