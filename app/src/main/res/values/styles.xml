@@ -8,6 +8,7 @@
         <item name="android:textSize">@dimen/text_size_title</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:layout_marginTop">48dp</item>
     </style>
 
     <style name="TextAppearance.App.H1" parent="TextAppearance.MaterialComponents.Headline4">
