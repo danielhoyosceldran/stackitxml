@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/colorSurface"
+    android:background="?attr/colorPrimary"
     android:padding="24dp">
 
     <TextView
@@ -35,15 +35,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel·lar"
-            android:textColor="?attr/colorPrimary" />
+            android:textColor="?attr/colorOnPrimary" />
 
         <Button
             android:id="@+id/shareConfirmButton"
-            style="?attr/buttonBarButtonStyle"
+            android:backgroundTint="?attr/colorPrimarySurface"
+            android:textColor="?attr/colorOnPrimarySurface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Compartir"
-            android:textColor="?attr/colorPrimary"
             android:layout_marginStart="8dp" />
 
     </LinearLayout>
