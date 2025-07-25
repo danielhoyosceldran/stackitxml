@@ -17,9 +17,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="48dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        android:layout_marginStart="16dp"
         android:gravity="center_vertical">
         <!-- Títol de la pantalla -->
         <TextView
@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@string/collections"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginEnd="32dp"
             style="@style/TextAppearance.App.Title"
             android:layout_weight="1"/>
