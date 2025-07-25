@@ -1,20 +1,33 @@
 <resources>
     <string name="app_name">StackIt</string>
 
-    <string name="collection_description_placeholder">Collection description…</string>
-    <string name="collection_name_placeholder">Collection name</string>
-    <string name="already_have_an_account">Already have an account?</string>
+    <!--Auth screens-->
     <string name="create_account">Create account</string>"
+    <string name="already_have_an_account">Already have an account?</string>
 
-    <string name="help_see_statistics">See statistics</string>
-    <string name="help_share">Share collection</string>
+    <!--Home screen-->
+    <string name="collections">Collections</string>
     <string name="help_logout">logout</string>
 
+    <!--Collection detail screen-->
+    <string name="collection_name_placeholder">Collection name</string>
+    <string name="collection_description_placeholder">Description…</string>
+    <string name="help_see_statistics">See statistics</string>
+    <string name="help_share">Share collection</string>
+    <string name="collection_owner_placeholder">Owner</string>
+    <string name="collection_members_placeholder">Membres: 1</string>
+
+    <string name="item_name_placeholder">Item name</string>
+
+    <!--Statistics screen-->
+    <string name="statistics">Statistics</string>
+
+    <!--General-->
     <string name="session_expired">Error: Session expired. Login</string>
 
 
-    <string name="statistics">Statistics</string>
-    <string name="collections">Collections</string>
+
+
 
     <!--statistics table-->
     <string name="item_name">Item name</string>

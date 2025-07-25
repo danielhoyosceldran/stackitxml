@@ -5,18 +5,19 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:cardBackgroundColor="?attr/colorSurface">
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@android:color/transparent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            android:background="@color/secondaryColor"
+            android:background="?attr/colorPrimary"
             android:layout_weight="2">
 
             <LinearLayout
@@ -25,21 +26,21 @@
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/collectionNameTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.App.Body"
                     android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:text="Nom de la Col·lecció"
-                    android:textColor="@color/primaryDarkColor"
+                    android:textSize="24sp"
+                    android:text="@string/collection_name_placeholder"
                     android:layout_weight="1"/>
                 <TextView
                     android:id="@+id/collectionOwnerTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="Owner"
+                    style="@style/TextAppearance.App.Caption"
+                    android:text="@string/collection_owner_placeholder"
                     android:visibility="gone"
-                    android:textColor="@color/primaryDarkColor"/>
+                    android:textColor="?attr/colorOnPrimary"/>
             </LinearLayout>
 
             <TextView
@@ -48,18 +49,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textSize="14sp"
-                android:text="Descripció de la col·lecció."
-                android:textColor="@color/primaryDarkColor" />
+                android:text="@string/collection_description_placeholder"
+                android:textColor="?attr/colorOnPrimary" />
 
             <TextView
                 android:id="@+id/collectionMembersCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                style="@style/TextAppearance.App.Caption"
                 android:textSize="12sp"
-                android:text="Membres: 1"
-                android:textStyle="italic"
-                android:textColor="@color/primaryDarkColor" />
+                android:text="@string/collection_members_placeholder"
+                android:textColor="?attr/colorOnPrimary" />
 
         </LinearLayout>
         <ImageButton
@@ -67,11 +68,11 @@
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:background="@color/errorBackgroundColor"
+            android:background="?attr/colorSecondary"
             android:src="@android:drawable/ic_delete"
             android:visibility="visible"
             android:layout_weight="1"
-            app:tint="@color/errorForegroundColor" />
+            app:tint="?attr/colorOnSecondary" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

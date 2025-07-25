@@ -18,8 +18,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="@string/collection_name_placeholder"
-        android:textSize="32sp"
-        android:textStyle="bold"
+        style="@style/TextAppearance.App.Title"
         app:layout_constraintEnd_toStartOf="@+id/shareCollectionButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -78,7 +77,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/collectionDetailNameTextView"
-        android:text="@string/collection_description_placeholder"/>
+        android:text="@string/collection_description_placeholder"
+        style="@style/TextAppearance.App.Body"/>
 
     <!-- Botó per veure estadístiques -->
     <Button
@@ -93,10 +93,8 @@
         app:layout_constraintTop_toBottomOf="@+id/collectionDescriptionTextView"
         app:layout_constraintBottom_toTopOf="@+id/itemsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/infoBackgroundColor"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/help_see_statistics"
-        android:textColor="@color/infoForegroundColor"/>
+        android:text="@string/help_see_statistics"/>
 
     <!-- Floating Action Button per afegir nous ítems -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -108,7 +106,5 @@
         android:contentDescription="Afegir nou ítem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/primaryColor"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="@color/primaryDarkColor" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

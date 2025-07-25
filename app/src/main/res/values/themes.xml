@@ -1,43 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Base application theme (Mode Clar). -->
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.Stackitxml" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Colors del tema -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/onPrimaryColor</item>
+        <item name="android:colorBackground">@color/cream</item>
+        <item name="colorOnBackground">@color/blue</item>
 
-        <item name="colorSecondary">@color/secondaryColor</item>
-        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
-        <item name="colorOnSecondary">@color/onSecondaryColor</item>
+        <item name="colorPrimary">@color/blue_light</item>
+        <item name="colorOnPrimary">@color/blue_dark</item>
+        <item name="colorPrimarySurface">@color/blue_dark</item>
+        <item name="colorOnPrimarySurface">@color/blue_light</item>
 
-        <item name="android:colorBackground">@color/backgroundColor</item>
-        <item name="colorOnBackground">@color/onBackgroundColor</item>
+        <item name="colorSecondary">@color/red_background</item>
+        <item name="colorOnSecondary">@color/red_foreground</item>
 
-        <item name="colorSurface">@color/surfaceColor</item>
-        <item name="colorOnSurface">@color/onSurfaceColor</item>
-
-        <item name="colorError">@color/errorBackgroundColor</item>
-        <item name="colorOnError">@color/errorForegroundColor</item>
-
-        <!-- Personalització de botons -->
-        <!-- Estil per als botons elevats (per defecte) -->
+        <!-- Estils de botons per a mode fosc -->
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
-        <!-- Estil per als botons de text (sense fons) -->
         <item name="buttonBarButtonStyle">@style/Widget.App.Button.TextButton</item>
 
-        <!-- Altres personalitzacions -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
 
-    <!-- Defineix estils personalitzats per als teus botons (Mode Clar) -->
+    <!-- Defineix estils personalitzats per als botons (Mode Clar) -->
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/onPrimaryColor</item>
-        <item name="backgroundTint">@color/primaryColor</item>
+        <item name="android:textColor">@color/blue_dark</item>
+        <item name="backgroundTint">@color/blue_light</item>
         <item name="cornerRadius">8dp</item>
     </style>
 
     <style name="Widget.App.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:textColor">@color/blue_dark</item>
     </style>
 </resources>
