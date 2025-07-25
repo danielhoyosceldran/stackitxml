@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp"
-    android:background="?attr/colorSurface"> <!-- Fons de la fila, s'adaptarà al tema -->
+    android:background="@android:color/transparent">
 
     <TextView
         android:id="@+id/itemNameStatTextView"
