@@ -15,6 +15,7 @@
         <!-- Estils de botons per a mode fosc -->
         <item name="materialButtonStyle">@style/Widget.App.Button.Night</item>
         <item name="buttonBarButtonStyle">@style/Widget.App.Button.TextButton.Night</item>
+        <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton.Night</item>
 
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
@@ -28,5 +29,10 @@
 
     <style name="Widget.App.Button.TextButton.Night" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/blue_light</item>
+    </style>
+
+    <style name="Widget.App.FloatingActionButton.Night" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/blue_dark</item>
+        <item name="tint">@color/cream</item>
     </style>
 </resources>
