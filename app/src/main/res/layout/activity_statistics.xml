@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,26 +14,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/statistics"
-        android:textSize="32sp"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart  ="16dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="?attr/colorOnBackground"/>
+        android:textColor="?attr/colorOnBackground"
+        style="@style/TextAppearance.App.Title"/>
 
     <TextView
         android:id="@+id/collectionNameStatsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="[Nom de la Col·lecció]"
-        android:textSize="20sp"
-        android:textStyle="italic"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="?attr/colorOnBackground"/>
+        android:textColor="?attr/colorOnBackground"
+        style="@style/TextAppearance.App.Subtitle"/>
 
     <!-- Contenidor de la taula -->
     <LinearLayout
@@ -55,40 +54,36 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="Ítem"
+                android:layout_weight="2"
+                android:text="@string/item_name"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"/>
+                style="@style/TextAppearance.App.Body"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Comptes"
+                android:layout_weight="2"
+                android:text="@string/item_counts"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
+                style="@style/TextAppearance.App.Body"
                 android:gravity="center"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="Col·laborador Principal"
+                android:text="@string/main_contributor"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
+                style="@style/TextAppearance.App.Body"
                 android:gravity="center"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="El meu compte"
+                android:text="@string/my_count"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="14sp"
+                style="@style/TextAppearance.App.Body"
                 android:gravity="center"/>
         </LinearLayout>
 
@@ -98,7 +93,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <!-- Les files dels ítems s'afegiran aquí programàticament -->
         </LinearLayout>
 
     </LinearLayout>
@@ -107,10 +101,9 @@
         android:id="@+id/noItemsMessageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No hi ha ítems en aquesta col·lecció per mostrar estadístiques."
-        android:layout_marginTop="16dp"
+        android:text="@string/not_items_to_show"
         android:layout_gravity="center_horizontal"
         android:visibility="gone"
-        android:textColor="?attr/colorOnBackground"/>
+        style="@style/TextAppearance.App.Caption"/>
 
 </LinearLayout>

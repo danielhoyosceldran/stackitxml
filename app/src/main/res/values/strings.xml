@@ -16,6 +16,14 @@
     <string name="statistics">Statistics</string>
     <string name="collections">Collections</string>
 
-
-
+    <!--statistics table-->
+    <string name="item_name">Item name</string>
+    <string name="item_counts">Item counts</string>
+    <string name="main_contributor">Main contributor</string>
+    <string name="my_count">My count</string>
+    <string name="not_items_to_show">There are no items in this collection to show statistics.</string>
+    <string name="row_item_name">item name</string>
+    <string name="row_item_count">0</string>
+    <string name="row_item_main_contributor">user (count)</string>
+    <string name="row_item_my_count">0</string>
 </resources>

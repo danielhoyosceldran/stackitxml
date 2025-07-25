@@ -3,16 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+    android:padding="8dp"
     android:background="?attr/colorSurface"> <!-- Fons de la fila, s'adaptarà al tema -->
 
     <TextView
         android:id="@+id/itemNameStatTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:text="Nom de l'Ítem"
+        android:layout_weight="2"
+        android:text="@string/row_item_name"
         android:textColor="?attr/colorOnSurface"
         android:textSize="14sp"/>
 
@@ -20,8 +19,8 @@
         android:id="@+id/itemCountsTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="0"
+        android:layout_weight="2"
+        android:text="@string/row_item_count"
         android:textColor="?attr/colorOnSurface"
         android:textSize="14sp"
         android:gravity="center"/>
@@ -31,9 +30,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:text="Usuari (0)"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="14sp"
+        android:text="@string/row_item_main_contributor"
+        style="@style/TextAppearance.App.Body"
         android:gravity="center"/>
 
     <TextView
@@ -41,7 +39,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
-        android:text="0"
+        android:text="@string/row_item_my_count"
         android:textColor="?attr/colorOnSurface"
         android:textSize="14sp"
         android:gravity="center"/>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mides de text per a títols i elements importants -->
+    <dimen name="text_size_title">48sp</dimen>
+    <dimen name="text_size_h1">34sp</dimen>
+    <dimen name="text_size_h2">24sp</dimen>
+    <dimen name="text_size_subtitle">16sp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="text_size_caption">14sp</dimen>
+</resources>

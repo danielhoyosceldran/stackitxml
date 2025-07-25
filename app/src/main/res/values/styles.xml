@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ... (El teu tema Theme.Stackitxml i els estils de botons ja definits) ... -->
+
+    <!-- Estils de text personalitzats -->
+    <!-- Afegim un parent de MaterialComponents per a cada estil -->
+    <style name="TextAppearance.App.Title" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <style name="TextAppearance.App.H1" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textSize">@dimen/text_size_h1</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <style name="TextAppearance.App.H2" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textSize">@dimen/text_size_h2</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <style name="TextAppearance.App.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <style name="TextAppearance.App.Body" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">@dimen/text_size_body</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <style name="TextAppearance.App.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">@dimen/text_size_caption</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+</resources>
