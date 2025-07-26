@@ -67,6 +67,7 @@ class FirestoreRepository {
         return !querySnapshot.isEmpty
     }
 
+    // todo: Eliminar metode
     // Mètode per obtenir detalls d'un usuari per ID (útil per estadístiques i mostrar noms)
     suspend fun getUserDetails(userId: String): Result<User> {
         return try {
@@ -142,6 +143,19 @@ class FirestoreRepository {
             } else {
                 Result.failure(Exception("Col·lecció no trobada amb ID: $collectionId"))
             }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    // Recupera la ID del l'usuari que ha creat la col·lecció.
+    suspend fun getOwnerIdByCollectionId(collectionId: String): Result<String> {
+        return try {
+            val collectionResult = getCollectionById(collectionId)
+            collectionResult.fold(
+                onSuccess = { Result.success(it.ownerId) },
+                onFailure = { Result.failure(it) }
+            )
         } catch (e: Exception) {
             Result.failure(e)
         }

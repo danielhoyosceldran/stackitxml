@@ -3,6 +3,7 @@ package com.example.stackitxml.ui.collectiondetail
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -104,6 +105,28 @@ class CollectionDetailActivity : AppCompatActivity() {
         }
     }
 
+    // configura visibilitat botó editar
+    private fun showEditCollectionDialog() {
+        collectionId?.let { id ->
+            lifecycleScope.launch {
+                val ownerIdResult = firestoreRepository.getOwnerIdByCollectionId(id);
+                ownerIdResult.onSuccess { ownerId ->
+                    if (ownerId == firestoreRepository.getCurrentUserId()) {
+                        editCollectionButton.visibility = View.VISIBLE
+                    } else {
+                        editCollectionButton.visibility = View.GONE
+                    }
+                    return@launch
+                }.onFailure { exception ->
+                    DialogUtils.showLongToast(
+                        this@CollectionDetailActivity,
+                        "Error checking collection ownership: ${exception.message}"
+                    )
+                }
+            }
+        }
+    }
+
     // Carrega el nom de la col·lecció i actualitza el TextView.
     private fun loadCollectionDetails() {
         collectionId?.let { id ->
@@ -112,6 +135,9 @@ class CollectionDetailActivity : AppCompatActivity() {
                 result.onSuccess { collection ->
                     collectionDetailNameTextView.text = collection.name
                     collectionDescriptionTextView.text = collection.description
+
+                    // Mostra o no el botó edit
+                    showEditCollectionDialog();
                 }.onFailure { exception ->
                     DialogUtils.showLongToast(this@CollectionDetailActivity, "Error loading collection details: ${exception.message}")
                     finish() // Tanca si no es poden carregar els detalls
@@ -258,6 +284,16 @@ class CollectionDetailActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
+            val ownerIdResult = firestoreRepository.getOwnerIdByCollectionId(currentCollId);
+            ownerIdResult.onSuccess { ownerId ->
+                if (ownerId != firestoreRepository.getCurrentUserId()) {
+                    DialogUtils.showLongToast(this@CollectionDetailActivity, "You are not the owner of this collection.")
+                    return@launch
+                }
+
+            }.onFailure { exception ->
+                DialogUtils.showLongToast(this@CollectionDetailActivity, "Error checking collection ownership: ${exception.message}")
+            }
             val result = firestoreRepository.deleteItem(currentCollId, item.itemId)
             result.onSuccess {
                 DialogUtils.showToast(this@CollectionDetailActivity, "Item '${item.name}' deleted successfully!")
