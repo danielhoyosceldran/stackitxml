@@ -40,7 +40,7 @@ class StatisticsActivity : AppCompatActivity() {
         currentUserId = FirebaseAuth.getInstance().currentUser?.uid // Obtenir l'ID de l'usuari actual
 
         if (collectionId == null || currentUserId == null) {
-            DialogUtils.showLongToast(this, "Error: No s'ha trobat l'ID de la col·lecció o l'usuari.")
+            DialogUtils.showLongToast(this, "Error: Collection ID or user not found.")
             finish()
             return
         }
@@ -67,8 +67,8 @@ class StatisticsActivity : AppCompatActivity() {
                     collectionResult.onSuccess { collection ->
                         collectionNameStatsTextView.text = "${collection.name}"
                     }.onFailure { exception ->
-                        DialogUtils.showLongToast(this@StatisticsActivity, "Error en carregar nom de la col·lecció: ${exception.message}")
-                        collectionNameStatsTextView.text = "desconeguda"
+                        DialogUtils.showLongToast(this@StatisticsActivity, "Error loading collection name: ${exception.message}")
+                        collectionNameStatsTextView.text = "unknown"
                     }
 
                     // Obtenir tots els ítems de la col·lecció
@@ -88,7 +88,7 @@ class StatisticsActivity : AppCompatActivity() {
                         val usersMap = if (usersResult.isSuccess) {
                             usersResult.getOrNull()?.associateBy { it.userId } ?: emptyMap()
                         } else {
-                            DialogUtils.showLongToast(this@StatisticsActivity, "Error en carregar usuaris: ${usersResult.exceptionOrNull()?.message}")
+                            DialogUtils.showLongToast(this@StatisticsActivity, "Error loading users: ${usersResult.exceptionOrNull()?.message}")
                             emptyMap()
                         }
 
@@ -101,7 +101,7 @@ class StatisticsActivity : AppCompatActivity() {
                             val mainContributorId = mainContributorEntry?.key
                             val mainContributorCount = mainContributorEntry?.value ?: 0L
 
-                            val mainContributorUsername = usersMap[mainContributorId]?.username ?: "Desconegut"
+                            val mainContributorUsername = usersMap[mainContributorId]?.username ?: "Unknown"
 
                             val myCount = item.personalCount[userId] ?: 0L
 
@@ -118,8 +118,8 @@ class StatisticsActivity : AppCompatActivity() {
                         }
 
                     }.onFailure { exception ->
-                        DialogUtils.showLongToast(this@StatisticsActivity, "Error en carregar ítems per a estadístiques: ${exception.message}")
-                        noItemsMessageTextView.text = "Error en carregar dades."
+                        DialogUtils.showLongToast(this@StatisticsActivity, "Error loading items for statistics: ${exception.message}")
+                        noItemsMessageTextView.text = "Error loading data."
                         noItemsMessageTextView.visibility = View.VISIBLE
                         itemRowsContainer.visibility = View.GONE
                     }

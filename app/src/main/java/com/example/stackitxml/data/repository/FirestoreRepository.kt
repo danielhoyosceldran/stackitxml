@@ -20,11 +20,11 @@ class FirestoreRepository {
         return try {
             val usernameExists = isUsernameTaken(username)
             if (usernameExists) {
-                return Result.failure(Exception("El nom d'usuari ja està en ús. Si us plau, tria un altre."))
+                return Result.failure(Exception("Username is already taken. Please choose another one."))
             }
 
             val authResult = auth.createUserWithEmailAndPassword(email, password).await()
-            val firebaseUser = authResult.user ?: throw Exception("No s'ha pogut obtenir l'usuari de Firebase.")
+            val firebaseUser = authResult.user ?: throw Exception("Could not get Firebase user.")
 
             val userId = firebaseUser.uid
             val newUser = User(
@@ -46,10 +46,10 @@ class FirestoreRepository {
     suspend fun loginUser(email: String, password: String): Result<User> {
         return try {
             auth.signInWithEmailAndPassword(email, password).await()
-            val firebaseUser = auth.currentUser ?: throw Exception("No s'ha pogut obtenir l'usuari actual.")
+            val firebaseUser = auth.currentUser ?: throw Exception("Could not get current user.")
 
             val userDocument = db.collection(Constants.COLLECTION_USERS).document(firebaseUser.uid).get().await()
-            val user = userDocument.toObject(User::class.java) ?: throw Exception("No s'han trobat dades d'usuari a Firestore.")
+            val user = userDocument.toObject(User::class.java) ?: throw Exception("User data not found in Firestore.")
 
             Result.success(user)
         } catch (e: Exception) {
@@ -76,7 +76,7 @@ class FirestoreRepository {
             if (user != null) {
                 Result.success(user)
             } else {
-                Result.failure(Exception("Usuari no trobat a Firestore."))
+                Result.failure(Exception("User not found in Firestore."))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -141,7 +141,7 @@ class FirestoreRepository {
             if (collection != null) {
                 Result.success(collection)
             } else {
-                Result.failure(Exception("Col·lecció no trobada amb ID: $collectionId"))
+                Result.failure(Exception("Collection not found with ID: $collectionId"))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -201,7 +201,7 @@ class FirestoreRepository {
                 .await()
 
             val receptorUser = receptorQuery.documents.firstOrNull()?.toObject(User::class.java)
-                ?: return Result.failure(Exception("Usuari amb aquest correu electrònic no trobat."))
+                ?: return Result.failure(Exception("User with this email not found."))
 
             val receptorUserId = receptorUser.userId
 
@@ -265,7 +265,7 @@ class FirestoreRepository {
             // Obtenir l'ítem actual per actualitzar personalCount i recalcular totalCount
             val itemDoc = itemRef.get().await()
             val currentItem = itemDoc.toObject(Item::class.java)
-                ?: return Result.failure(Exception("Ítem no trobat per actualitzar el comptador."))
+                ?: return Result.failure(Exception("Item not found to update counter."))
 
             val updatedPersonalCount = currentItem.personalCount.toMutableMap()
             updatedPersonalCount[userId] = newCount
@@ -304,10 +304,9 @@ class FirestoreRepository {
     // Si la crida un no owner: Elimina una de la seva llista.
     suspend fun deleteCollection(collectionId: String): Result<Unit> {
         return try {
-            val currentUserId = getCurrentUserId() ?: return Result.failure(Exception("Usuari no autenticat."))
+            val currentUserId = getCurrentUserId() ?: return Result.failure(Exception("User not authenticated."))
             val collectionDoc = db.collection(Constants.COLLECTION_COLLECTIONS).document(collectionId).get().await()
-            val collectionToDelete = collectionDoc.toObject(Collection::class.java)
-                ?: return Result.failure(Exception("Col·lecció no trobada per eliminar."))
+            val collectionToDelete = collectionDoc.toObject(Collection::class.java) ?: return Result.failure(Exception("Collection not found for deletion."))
 
             if (collectionToDelete.ownerId == currentUserId) {
                 // Eliminar la col·lecció de la llista accessible de cada membre

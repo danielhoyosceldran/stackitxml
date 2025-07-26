@@ -37,7 +37,7 @@ class    RegisterActivity : AppCompatActivity() {
             val username = usernameEditText.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
-                Toast.makeText(this, "Si us plau, omple tots els camps.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -46,11 +46,11 @@ class    RegisterActivity : AppCompatActivity() {
                 val result = firestoreRepository.registerUser(email, password, username)
                 result.onSuccess { user ->
                     // Utilitzem this@RegisterActivity per indicar el context corrent (no podem fer this perquè estem a un altre fil d'execució)
-                    Toast.makeText(this@RegisterActivity, "Registre exitós per a ${user.username}!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@RegisterActivity, "Registration successful for ${user.username}!", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
                     finish()
                 }.onFailure { exception ->
-                    Toast.makeText(this@RegisterActivity, "Error de registre: ${exception.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@RegisterActivity, "Registration error: ${exception.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }

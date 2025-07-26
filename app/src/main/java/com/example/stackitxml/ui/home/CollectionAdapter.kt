@@ -44,7 +44,7 @@ class CollectionAdapter(
         val collection = collections[position]
         holder.collectionNameTextView.text = collection.name
         holder.collectionDescriptionTextView.text = collection.description
-        holder.collectionMembersCountTextView.text = "Membres: ${collection.memberIds.size}"
+        holder.collectionMembersCountTextView.text = "Members: ${collection.memberIds.size}"
 
          // Lògica per mostrar/ocultar el TextView de propietat de la col·lecció
          if (currentUserId != null) {

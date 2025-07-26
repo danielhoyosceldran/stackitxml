@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Si us plau, introdueix el correu electrònic i la contrasenya.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter email and password.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -42,11 +42,11 @@ class LoginActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 val result = firestoreRepository.loginUser(email, password)
                 result.onSuccess { user ->
-                    Toast.makeText(this@LoginActivity, "Inici de sessió exitós per a ${user.username}!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Login successful for ${user.username}!", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                     finish()
                 }.onFailure { exception ->
-                    Toast.makeText(this@LoginActivity, "Error d'autenticació: ${exception.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LoginActivity, "Authentication error: ${exception.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }

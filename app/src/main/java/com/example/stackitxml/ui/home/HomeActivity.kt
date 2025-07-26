@@ -90,14 +90,14 @@ class HomeActivity : AppCompatActivity() {
         // Configura el listener per al botó de Log Out
         logoutButton.setOnClickListener {
             firestoreRepository.signOut()
-            DialogUtils.showToast(this, "Sessió tancada correctament.")
+            DialogUtils.showToast(this, "Session closed successfully.")
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
         }
 
-        // Carrega les col·leccions en iniciar l'activitat
+        // Carrega les col·leccions
         loadCollections()
     }
 
@@ -122,12 +122,12 @@ class HomeActivity : AppCompatActivity() {
             val currentUserId = firestoreRepository.getCurrentUserId()
 
             if (name.isEmpty()) {
-                DialogUtils.showToast(this, "El nom de la col·lecció no pot estar buit.")
+                DialogUtils.showToast(this, "The collection name cannot be empty.")
                 return@setOnClickListener
             }
 
             if (currentUserId == null) {
-                DialogUtils.showLongToast(this, "Error: Usuari no autenticat. Torna a iniciar sessió.")
+                DialogUtils.showLongToast(this, "Error: User not authenticated. Please log in again.")
                 dialog.dismiss()
                 return@setOnClickListener
             }
@@ -135,11 +135,11 @@ class HomeActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 val result = firestoreRepository.createCollection(name, description, currentUserId)
                 result.onSuccess {
-                    DialogUtils.showToast(this@HomeActivity, "Col·lecció '${it.name}' creada amb èxit!")
+                    DialogUtils.showToast(this@HomeActivity, "Collection '${it.name}' created successfully!")
                     dialog.dismiss()
                     loadCollections()
                 }.onFailure { exception ->
-                    DialogUtils.showLongToast(this@HomeActivity, "Error al crear col·lecció: ${exception.message}")
+                    DialogUtils.showLongToast(this@HomeActivity, "Error creating collection: ${exception.message}")
                 }
             }
         }
@@ -150,7 +150,7 @@ class HomeActivity : AppCompatActivity() {
     private fun loadCollections() {
         val currentUserId = firestoreRepository.getCurrentUserId()
         if (currentUserId == null) {
-            DialogUtils.showLongToast(this, "Error: Usuari no autenticat. Torna a iniciar sessió.")
+            DialogUtils.showLongToast(this, "Error: User not authenticated. Please log in again.")
             return
         }
 
@@ -158,28 +158,52 @@ class HomeActivity : AppCompatActivity() {
             val result = firestoreRepository.getCollectionsForUser(currentUserId)
             result.onSuccess { collections ->
                 if (collections.isEmpty()) {
-                    DialogUtils.showToast(this@HomeActivity, "No tens col·leccions. Crea una!")
+                    DialogUtils.showToast(this@HomeActivity, "You have no collections. Create one!")
                 }
                 collectionAdapter.updateCollections(collections)
             }.onFailure { exception ->
-                DialogUtils.showLongToast(this@HomeActivity, "Error en carregar col·leccions: ${exception.message}")
+                DialogUtils.showLongToast(this@HomeActivity, "Error loading collections: ${exception.message}")
             }
         }
     }
 
     // Mostra un diàleg de confirmació abans d'eliminar una col·lecció.
     private fun showConfirmDeleteCollectionDialog(collection: Collection) {
-        AlertDialog.Builder(this)
-            .setTitle("Confirmar eliminació")
-            .setMessage("Estàs segur que vols eliminar la col·lecció '${collection.name}'? Això eliminarà tots els seus ítems i la desvincularà de tots els usuaris.")
-            .setPositiveButton("Eliminar") { dialog, _ ->
-                deleteCollection(collection.collectionId)
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancel·lar") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+        val currentUserId = firestoreRepository.getCurrentUserId()
+
+        val isOwner = collection.ownerId == currentUserId
+        val dialogTitle: String
+        val dialogMessage: String
+
+        dialogTitle = getString(R.string.delete_confirmation)
+        if (isOwner) {
+            dialogMessage = getString(R.string.delete_confirmation_message) + " collection `${collection.name}`? " + getString(R.string.owner_collection_delete_description)
+        } else {
+            dialogMessage = "Are you sure you want to remove from your collections the collection '${collection.name}'?"
+        }
+
+        // Inflar el diàleg genèric
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_delete_confirmation, null)
+        val titleTextView: TextView = dialogView.findViewById(R.id.dialogTitleTextView)
+        val messageTextView: TextView = dialogView.findViewById(R.id.dialogMessageTextView)
+        val cancelButton: Button = dialogView.findViewById(R.id.cancelButton)
+        val confirmButton: Button = dialogView.findViewById(R.id.confirmButton)
+
+        titleTextView.text = dialogTitle
+        messageTextView.text = dialogMessage
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        cancelButton.setOnClickListener { dialog.dismiss() }
+
+        confirmButton.setOnClickListener {
+            deleteCollection(collection.collectionId)
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     // Elimina una col·lecció de la base de dades.
@@ -187,10 +211,10 @@ class HomeActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val result = firestoreRepository.deleteCollection(collectionId)
             result.onSuccess {
-                DialogUtils.showToast(this@HomeActivity, "Col·lecció eliminada amb èxit!")
+                DialogUtils.showToast(this@HomeActivity, "Collection deleted successfully!")
                 loadCollections() // Recarrega la llista de col·leccions
             }.onFailure { exception ->
-                DialogUtils.showLongToast(this@HomeActivity, "Error a l'eliminar col·lecció: ${exception.message}")
+                DialogUtils.showLongToast(this@HomeActivity, "Error deleting collection: ${exception.message}")
             }
         }
     }

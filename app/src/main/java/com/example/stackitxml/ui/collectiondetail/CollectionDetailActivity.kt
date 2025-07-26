@@ -194,7 +194,7 @@ class CollectionDetailActivity : AppCompatActivity() {
                     val newItem = Item(name = itemName, creatorId = currentUserId)
                     val result = firestoreRepository.addItemToCollection(collId, newItem)
                     result.onSuccess {
-                        DialogUtils.showToast(this@CollectionDetailActivity, "Item '${it.name}' added succesfuly")
+                        DialogUtils.showToast(this@CollectionDetailActivity, "Item '${it.name}' added successfully")
                         dialog.dismiss()
                         loadItems() // Recarrega la llista d'ítems
                     }.onFailure { exception ->
@@ -262,17 +262,28 @@ class CollectionDetailActivity : AppCompatActivity() {
 
     // Diàleg per a confirmar el fet d'eliminar un item
     private fun showConfirmDeleteItemDialog(item: Item) {
-        AlertDialog.Builder(this)
-            .setTitle("Confirm deletion")
-            .setMessage("Are you sure you want to delete the item '${item.name}'?")
-            .setPositiveButton("Delete") { dialog, _ ->
-                deleteItem(item)
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancel·lar") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_delete_confirmation, null)
+        val titleTextView: TextView = dialogView.findViewById(R.id.dialogTitleTextView)
+        val messageTextView: TextView = dialogView.findViewById(R.id.dialogMessageTextView)
+        val cancelButton: Button = dialogView.findViewById(R.id.cancelButton)
+        val confirmButton: Button = dialogView.findViewById(R.id.confirmButton)
+
+        titleTextView.text = getString(R.string.item_delete_confirmation)
+        val message = getString(R.string.delete_confirmation_message) + " item '${item.name}'?"
+        messageTextView.text = message
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        cancelButton.setOnClickListener { dialog.dismiss() }
+
+        confirmButton.setOnClickListener {
+            deleteItem(item)
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     // Funció per a eliminar un item

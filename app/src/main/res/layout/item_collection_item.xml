@@ -42,7 +42,7 @@
                     android:id="@+id/subtractButton"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:text="@string/substract_count"
+                    android:text="@string/subtract_count"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:gravity="center"
