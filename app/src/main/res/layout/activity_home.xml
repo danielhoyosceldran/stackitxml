@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:contentDescription="Afegir nova col·lecció"
+        android:contentDescription="Add new collection"
         app:srcCompat="@android:drawable/ic_input_add"/>
 
 </LinearLayout>
