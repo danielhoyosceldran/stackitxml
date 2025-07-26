@@ -105,28 +105,6 @@ class CollectionDetailActivity : AppCompatActivity() {
         }
     }
 
-    // configura visibilitat botó editar
-    private fun showEditCollectionDialog() {
-        collectionId?.let { id ->
-            lifecycleScope.launch {
-                val ownerIdResult = firestoreRepository.getOwnerIdByCollectionId(id);
-                ownerIdResult.onSuccess { ownerId ->
-                    if (ownerId == firestoreRepository.getCurrentUserId()) {
-                        editCollectionButton.visibility = View.VISIBLE
-                    } else {
-                        editCollectionButton.visibility = View.GONE
-                    }
-                    return@launch
-                }.onFailure { exception ->
-                    DialogUtils.showLongToast(
-                        this@CollectionDetailActivity,
-                        "Error checking collection ownership: ${exception.message}"
-                    )
-                }
-            }
-        }
-    }
-
     // Carrega el nom de la col·lecció i actualitza el TextView.
     private fun loadCollectionDetails() {
         collectionId?.let { id ->
@@ -137,10 +115,34 @@ class CollectionDetailActivity : AppCompatActivity() {
                     collectionDescriptionTextView.text = collection.description
 
                     // Mostra o no el botó edit
-                    showEditCollectionDialog();
+                    showHideEditControls();
                 }.onFailure { exception ->
                     DialogUtils.showLongToast(this@CollectionDetailActivity, "Error loading collection details: ${exception.message}")
                     finish() // Tanca si no es poden carregar els detalls
+                }
+            }
+        }
+    }
+
+    // configura visibilitat botó editar
+    private fun showHideEditControls() {
+        collectionId?.let { id ->
+            lifecycleScope.launch {
+                val ownerIdResult = firestoreRepository.getOwnerIdByCollectionId(id);
+                ownerIdResult.onSuccess { ownerId ->
+                    if (ownerId == firestoreRepository.getCurrentUserId()) {
+                        editCollectionButton.visibility = View.VISIBLE
+                        addItemFab.visibility = View.VISIBLE
+                    } else {
+                        editCollectionButton.visibility = View.GONE
+                        addItemFab.visibility = View.GONE
+                    }
+                    return@launch
+                }.onFailure { exception ->
+                    DialogUtils.showLongToast(
+                        this@CollectionDetailActivity,
+                        "Error checking collection ownership: ${exception.message}"
+                    )
                 }
             }
         }
