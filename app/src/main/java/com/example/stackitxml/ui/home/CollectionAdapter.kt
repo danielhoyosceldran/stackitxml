@@ -47,10 +47,12 @@ class CollectionAdapter(
         holder.collectionMembersCountTextView.text = "Membres: ${collection.memberIds.size}"
 
          // Lògica per mostrar/ocultar el TextView de propietat de la col·lecció
-         if (currentUserId != null && collection.ownerId == currentUserId) {
-             holder.collectionOwnerTextView.visibility = View.VISIBLE
+         if (currentUserId != null) {
+             if (collection.ownerId == currentUserId) {
+                holder.collectionOwnerTextView.visibility = View.VISIBLE
+             }
              holder.deleteCollectionButton.setOnClickListener {
-                 onDeleteCollectionClick(collection) // Crida la lambda de supressió
+                 onDeleteCollectionClick(collection)
              }
          } else {
              holder.collectionOwnerTextView.visibility = View.GONE

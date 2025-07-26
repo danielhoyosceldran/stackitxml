@@ -3,6 +3,7 @@ package com.example.stackitxml.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -70,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(intent)
             },
             showEditCollectionsButton = false,
-            onDeleteCollectionClick = { collection -> showConfirmDeleteCollectionDialog(collection) } // Passa la lògica d'eliminar
+            onDeleteCollectionClick = { collection -> showConfirmDeleteCollectionDialog(collection) }
         )
         collectionsRecyclerView.adapter = collectionAdapter
 
