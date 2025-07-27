@@ -25,6 +25,7 @@ import com.example.stackitxml.util.Constants
 import com.example.stackitxml.util.DialogUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
+import com.google.firebase.firestore.ListenerRegistration
 
 class HomeActivity : AppCompatActivity() {
 
@@ -37,7 +38,9 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var collectionAdapter: CollectionAdapter
     private val firestoreRepository = FirestoreRepository()
 
-    private var isEditCollectionsButtonVisible = false;
+    private var isEditCollectionsButtonVisible = false
+
+    private var collectionsListener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,9 +99,6 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        // Carrega les col·leccions
-        loadCollections()
     }
 
     private fun showAddCollectionDialog() {
@@ -137,7 +137,6 @@ class HomeActivity : AppCompatActivity() {
                 result.onSuccess {
                     DialogUtils.showToast(this@HomeActivity, "Collection '${it.name}' created successfully!")
                     dialog.dismiss()
-                    loadCollections()
                 }.onFailure { exception ->
                     DialogUtils.showLongToast(this@HomeActivity, "Error creating collection: ${exception.message}")
                 }
@@ -154,8 +153,9 @@ class HomeActivity : AppCompatActivity() {
             return
         }
 
-        lifecycleScope.launch {
-            val result = firestoreRepository.getCollectionsForUser(currentUserId)
+        collectionsListener?.remove()
+
+        collectionsListener = firestoreRepository.getCollectionsForUserRealtime(currentUserId) { result ->
             result.onSuccess { collections ->
                 if (collections.isEmpty()) {
                     DialogUtils.showToast(this@HomeActivity, "You have no collections. Create one!")
@@ -212,15 +212,20 @@ class HomeActivity : AppCompatActivity() {
             val result = firestoreRepository.deleteCollection(collectionId)
             result.onSuccess {
                 DialogUtils.showToast(this@HomeActivity, "Collection deleted successfully!")
-                loadCollections() // Recarrega la llista de col·leccions
             }.onFailure { exception ->
                 DialogUtils.showLongToast(this@HomeActivity, "Error deleting collection: ${exception.message}")
             }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    // Inicia l'escoltador de Firestore quan l'activitat es fa visible
+    override fun onStart() {
+        super.onStart()
         loadCollections()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        collectionsListener?.remove()
     }
 }

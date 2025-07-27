@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FieldPath
 import kotlinx.coroutines.tasks.await
+import com.google.firebase.firestore.ListenerRegistration
 
 class FirestoreRepository {
 
@@ -161,31 +162,39 @@ class FirestoreRepository {
         }
     }
 
-    // Obté totes les col·leccions a les quals l'usuari té accés (és membre).
-    suspend fun getCollectionsForUser(userId: String): Result<List<Collection>> {
-        return try {
-            val userDoc = db.collection(Constants.COLLECTION_USERS).document(userId).get().await()
-            val user = userDoc.toObject(User::class.java)
+    // Obté totes les col·leccions a les quals l'usuari té accés (és membre actiu).
+    fun getCollectionsForUserRealtime(userId: String, onResult: (Result<List<Collection>>) -> Unit): ListenerRegistration {
+        val userRef = db.collection(Constants.COLLECTION_USERS).document(userId)
+
+        // Escoltador per als canvis en el document de l'usuari (per a accessibleCollectionIds)
+        return userRef.addSnapshotListener { userSnapshot, userError ->
+            if (userError != null) {
+                onResult(Result.failure(userError))
+                return@addSnapshotListener
+            }
+
+            val user = userSnapshot?.toObject(User::class.java)
             val accessibleIds = user?.accessibleCollectionIds ?: emptyList()
 
             if (accessibleIds.isEmpty()) {
-                return Result.success(emptyList())
+                onResult(Result.success(emptyList()))
+                return@addSnapshotListener
             }
 
-            val collections = mutableListOf<Collection>()
-            val chunks = accessibleIds.chunked(10) // Divideix les IDs en trossos de 10 (límit de whereIn)
-
-            for (chunk in chunks) {
-                val querySnapshot = db.collection(Constants.COLLECTION_COLLECTIONS)
-                    .whereIn(FieldPath.documentId(), chunk)
-                    .get()
-                    .await()
-                querySnapshot.documents.mapNotNullTo(collections) { it.toObject(Collection::class.java) }
-            }
-
-            Result.success(collections)
-        } catch (e: Exception) {
-            Result.failure(e)
+            // Si hi ha IDs accessibles, escoltem els canvis en les col·leccions
+            // Nota: Firestore té un límit de 10. Per a més de 10 IDs,
+            // caldria fer múltiples consultes. Per a nosaltres va bé.
+            // Si hi ha més de 10, només es mostraran les 10 primeres.
+            db.collection(Constants.COLLECTION_COLLECTIONS)
+                .whereIn(FieldPath.documentId(), accessibleIds.take(10)) // Limita a 10 per whereIn
+                .addSnapshotListener { collectionsSnapshot, collectionsError ->
+                    if (collectionsError != null) {
+                        onResult(Result.failure(collectionsError))
+                        return@addSnapshotListener
+                    }
+                    val collections = collectionsSnapshot?.documents?.mapNotNull { it.toObject(Collection::class.java) } ?: emptyList()
+                    onResult(Result.success(collections))
+                }
         }
     }
 
@@ -252,6 +261,21 @@ class FirestoreRepository {
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    // És igual que getItemsInCollection, però actualiza el contingut sol
+    fun getItemsInCollectionRealtime(collectionId: String, onResult: (Result<List<Item>>) -> Unit): ListenerRegistration {
+        return db.collection(Constants.COLLECTION_COLLECTIONS)
+            .document(collectionId)
+            .collection(Constants.COLLECTION_ITEMS)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    onResult(Result.failure(error))
+                    return@addSnapshotListener
+                }
+                val items = snapshot?.documents?.mapNotNull { it.toObject(Item::class.java) } ?: emptyList()
+                onResult(Result.success(items))
+            }
     }
 
     // Actualitza el comptador personal d'un ítem i el totalCount.

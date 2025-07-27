@@ -22,6 +22,7 @@ import com.example.stackitxml.util.Constants
 import com.example.stackitxml.util.DialogUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
+import com.google.firebase.firestore.ListenerRegistration
 
 class CollectionDetailActivity : AppCompatActivity() {
     private lateinit var collectionDetailNameTextView: TextView
@@ -38,6 +39,8 @@ class CollectionDetailActivity : AppCompatActivity() {
     private var isEditCollectionButtonVisible = false;
 
     private var collectionId: String? = null // ID de la col·lecció actual
+
+    private var itemsListener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +80,6 @@ class CollectionDetailActivity : AppCompatActivity() {
 
         // Carrega els detalls de la col·lecció i els seus ítems
         loadCollectionDetails()
-        loadItems()
 
         // Configura el botó flotant per afegir ítems
         addItemFab.setOnClickListener {
@@ -150,17 +152,24 @@ class CollectionDetailActivity : AppCompatActivity() {
 
     // Carrega els ítems de la col·lecció actual.
     private fun loadItems() {
-        collectionId?.let { id ->
-            lifecycleScope.launch {
-                val result = firestoreRepository.getItemsInCollection(id)
-                result.onSuccess { items ->
-                    itemAdapter.updateItems(items)
-                    if (items.isEmpty()) {
-                        DialogUtils.showToast(this@CollectionDetailActivity, "This collection has no items. Add one!")
-                    }
-                }.onFailure { exception ->
-                    DialogUtils.showLongToast(this@CollectionDetailActivity, "Error loading items: ${exception.message}")
+        val currentCollId = collectionId
+        if (currentCollId == null) {
+            DialogUtils.showLongToast(this, "Error: Collection ID not found for items.")
+            return
+        }
+
+        // Desvincula l'escoltador anterior si n'hi ha
+        itemsListener?.remove()
+
+        // Estableix el nou escoltador en temps real
+        itemsListener = firestoreRepository.getItemsInCollectionRealtime(currentCollId) { result ->
+            result.onSuccess { items ->
+                itemAdapter.updateItems(items)
+                if (items.isEmpty()) {
+                    DialogUtils.showToast(this@CollectionDetailActivity, "This collection has no items. Add one!")
                 }
+            }.onFailure { exception ->
+                DialogUtils.showLongToast(this@CollectionDetailActivity, "Error loading items: ${exception.message}")
             }
         }
     }
@@ -198,7 +207,6 @@ class CollectionDetailActivity : AppCompatActivity() {
                     result.onSuccess {
                         DialogUtils.showToast(this@CollectionDetailActivity, "Item '${it.name}' added successfully")
                         dialog.dismiss()
-                        loadItems() // Recarrega la llista d'ítems
                     }.onFailure { exception ->
                         DialogUtils.showLongToast(this@CollectionDetailActivity, "Error adding item: ${exception.message}")
                     }
@@ -220,9 +228,7 @@ class CollectionDetailActivity : AppCompatActivity() {
                 val newCount = (currentCount + change).coerceAtLeast(0L)
 
                 val result = firestoreRepository.updateItemCount(collId, item.itemId, currentUserId, newCount)
-                result.onSuccess {
-                    loadItems() // todo: revisar si cal carregar tot l'element o podem sumar directament el nou comptador
-                }.onFailure { exception ->
+                result.onFailure { exception ->
                     DialogUtils.showLongToast(this@CollectionDetailActivity, "Error updating counter: ${exception.message}")
                 }
             }
@@ -310,16 +316,22 @@ class CollectionDetailActivity : AppCompatActivity() {
             val result = firestoreRepository.deleteItem(currentCollId, item.itemId)
             result.onSuccess {
                 DialogUtils.showToast(this@CollectionDetailActivity, "Item '${item.name}' deleted successfully!")
-                loadItems() // Recarrega la llista d'ítems
             }.onFailure { exception ->
                 DialogUtils.showLongToast(this@CollectionDetailActivity, "Error deleting item: ${exception.message}")
             }
         }
     }
 
-    // Recarrega els ítems cada vegada que l'activitat es torna visible
-    override fun onResume() {
-        super.onResume()
+    // Inicia l'escoltador de Firestore quan l'activitat es fa visible
+    override fun onStart() {
+        super.onStart()
         loadItems()
+    }
+
+    // Atura l'escoltador de Firestore quan l'activitat ja no és visible
+    override fun onStop() {
+        super.onStop()
+        itemsListener?.remove() // Desvincula l'escoltador per evitar fuites de memòria
+        itemsListener = null
     }
 }
