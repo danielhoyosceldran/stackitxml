@@ -45,7 +45,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_home) // Enllaça la view XML a aquest fitxer
+        setContentView(R.layout.activity_home)
 
         // Aplica els insets a la vista arrel per evitar superposició amb barres i elements del mobil
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home_root_layout)) { v, insets ->

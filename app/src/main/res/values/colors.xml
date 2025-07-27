@@ -2,11 +2,10 @@
 <resources>
     <color name="text_primary">#121212</color>
     <color name="text_secondary">#757575</color>
-    <!-- Colors bàsics de Material Design (sovint ja presents) -->
+
     <color name="blue">#00293C</color>
     <color name="cream">#F1F3CE</color>
 
-    <!-- Colors-->
     <color name="red_background">#F48F67</color>
     <color name="red_foreground">#904629</color>
 

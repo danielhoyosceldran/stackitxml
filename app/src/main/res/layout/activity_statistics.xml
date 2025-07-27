@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.statistics.StatisticsActivity">
 
+
     <TextView
         android:id="@+id/statisticsTitleTextView"
         android:layout_width="wrap_content"

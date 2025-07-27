@@ -38,7 +38,6 @@ class CollectionAdapter(
         return CollectionViewHolder(view)
     }
 
-     // Vincula les dades d'una col·lecció a un ViewHolder.
      // S'invoca per actualitzar el contingut d'un ViewHolder existent amb noves dades.
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) {
         val collection = collections[position]

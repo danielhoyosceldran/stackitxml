@@ -68,9 +68,7 @@ class FirestoreRepository {
         return !querySnapshot.isEmpty
     }
 
-    // todo: Eliminar metode
-    // Mètode per obtenir detalls d'un usuari per ID (útil per estadístiques i mostrar noms)
-    suspend fun getUserDetails(userId: String): Result<User> {
+    suspend fun get(userId: String): Result<User> {
         return try {
             val documentSnapshot = db.collection(Constants.COLLECTION_USERS).document(userId).get().await()
             val user = documentSnapshot.toObject(User::class.java)
@@ -84,7 +82,7 @@ class FirestoreRepository {
         }
     }
 
-    //Obté tots els usuaris de la col·lecció 'users'.
+    // Obté tots els usuaris de la col·lecció 'users'.
     suspend fun getAllUsers(): Result<List<User>> {
         return try {
             val querySnapshot = db.collection(Constants.COLLECTION_USERS).get().await()
@@ -104,8 +102,6 @@ class FirestoreRepository {
     fun signOut() {
         auth.signOut()
     }
-
-    // --- MÈTODES PER A COL·LECCIONS ---
 
     // Crea una nova col·lecció a Firestore i l'assigna a l'usuari actual.
     // També actualitza la llista de col·leccions accessibles de l'usuari.
@@ -182,9 +178,6 @@ class FirestoreRepository {
             }
 
             // Si hi ha IDs accessibles, escoltem els canvis en les col·leccions
-            // Nota: Firestore té un límit de 10. Per a més de 10 IDs,
-            // caldria fer múltiples consultes. Per a nosaltres va bé.
-            // Si hi ha més de 10, només es mostraran les 10 primeres.
             db.collection(Constants.COLLECTION_COLLECTIONS)
                 .whereIn(FieldPath.documentId(), accessibleIds.take(10)) // Limita a 10 per whereIn
                 .addSnapshotListener { collectionsSnapshot, collectionsError ->
@@ -202,7 +195,7 @@ class FirestoreRepository {
     // Afegeix l'usuari a la llista de membres de la col·lecció i la col·lecció a la llista d'accessibles de l'usuari.
     suspend fun shareCollection(collectionId: String, receptorEmail: String): Result<Unit> {
         return try {
-            // 1. Trobar l'usuari receptor per correu electrònic
+            // Trobar l'usuari receptor per correu electrònic
             val receptorQuery = db.collection(Constants.COLLECTION_USERS)
                 .whereEqualTo("email", receptorEmail)
                 .limit(1)
@@ -214,12 +207,12 @@ class FirestoreRepository {
 
             val receptorUserId = receptorUser.userId
 
-            // 2. Afegir el receptor a la llista de membres de la col·lecció
+            // Afegir el receptor a la llista de membres de la col·lecció
             db.collection(Constants.COLLECTION_COLLECTIONS).document(collectionId)
                 .update("memberIds", FieldValue.arrayUnion(receptorUserId))
                 .await()
 
-            // 3. Afegir la col·lecció a la llista de col·leccions accessibles del receptor
+            // Afegir la col·lecció a la llista de col·leccions accessibles del receptor
             db.collection(Constants.COLLECTION_USERS).document(receptorUserId)
                 .update("accessibleCollectionIds", FieldValue.arrayUnion(collectionId))
                 .await()

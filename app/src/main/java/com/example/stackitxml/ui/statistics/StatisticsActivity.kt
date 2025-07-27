@@ -8,23 +8,19 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.stackitxml.R
-import com.example.stackitxml.data.model.Item
-import com.example.stackitxml.data.model.User
 import com.example.stackitxml.data.repository.FirestoreRepository
 import com.example.stackitxml.util.Constants
 import com.example.stackitxml.util.DialogUtils
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import androidx.activity.enableEdgeToEdge
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class StatisticsActivity : AppCompatActivity() {
 
     private lateinit var statisticsTitleTextView: TextView
     private lateinit var collectionNameStatsTextView: TextView
-    private lateinit var itemRowsContainer: LinearLayout // Contenidor per a les files d'ítems
-    private lateinit var noItemsMessageTextView: TextView // Missatge quan no hi ha ítems
+    private lateinit var itemRowsContainer: LinearLayout
+    private lateinit var noItemsMessageTextView: TextView
 
     private val firestoreRepository = FirestoreRepository()
     private var collectionId: String? = null
@@ -55,9 +51,7 @@ class StatisticsActivity : AppCompatActivity() {
         loadStatistics()
     }
 
-    /**
-     * Carrega les dades de la col·lecció i calcula les estadístiques per a la taula de rànquing.
-     */
+    // Carrega les dades de la col·lecció i calcula les estadístiques per a la taula de rànquing.
     private fun loadStatistics() {
         collectionId?.let { collId ->
             currentUserId?.let { userId ->
